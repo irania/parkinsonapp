@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5302412825886899278}
   - component: {fileID: 5302412825886899273}
   m_Layer: 5
-  m_Name: OKButton
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,7 +199,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 22ad3eb15938ba64f8bd3e9367baf461, type: 3}
     m_FontSize: 45
     m_FontStyle: 1
     m_BestFit: 0

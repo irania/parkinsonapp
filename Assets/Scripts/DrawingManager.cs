@@ -17,12 +17,15 @@ public class DrawingManager : MonoBehaviour
     private List<Sprite> Patterns;
 
     private int patternIndex;
+
+    private bool isDrawing;
     // Start is called before the first frame update
     void Awake()
     {
         PatternCanvas.SetActive(true);
         DrawingCanvas.SetActive(false);
         patternIndex = 0;
+        isDrawing = false;
         SetPattern();
     }
 
@@ -35,6 +38,7 @@ public class DrawingManager : MonoBehaviour
     {
         DrawingCanvas.SetActive(true);
         PatternCanvas.SetActive(false);
+        isDrawing = true;
     }
 
     public void DoneButton()
@@ -46,6 +50,7 @@ public class DrawingManager : MonoBehaviour
         }
         else
         {
+            isDrawing = false;
             DrawingCanvas.SetActive(false);
             PatternCanvas.SetActive(true);
         }
