@@ -13,8 +13,11 @@ public class DrawingManager : MonoBehaviour
     private SpriteRenderer FirstPattern;
     [SerializeField] 
     private SpriteRenderer SecondPattern;
+    [SerializeField] 
+    private SpriteRenderer SymmetricPattern;
     [SerializeField]
     private List<Sprite> Patterns;
+
 
     private int patternIndex;
 
@@ -32,7 +35,14 @@ public class DrawingManager : MonoBehaviour
     private void SetPattern()
     {
         FirstPattern.sprite = Patterns[patternIndex];
-        SecondPattern.sprite = Patterns[patternIndex];
+        SecondPattern.sprite = null;
+        SymmetricPattern.sprite = null;
+        if (patternIndex > 5)
+            SymmetricPattern.sprite = Patterns[patternIndex];
+        else
+        {
+            SecondPattern.sprite = Patterns[patternIndex];
+        }
     }
     public void LetsGoButton()
     {
@@ -51,9 +61,20 @@ public class DrawingManager : MonoBehaviour
         else
         {
             isDrawing = false;
+            SetPattern();
+            CleanPage();
             DrawingCanvas.SetActive(false);
             PatternCanvas.SetActive(true);
         }
 
+    }
+
+    public void CleanPage()
+    {
+        var lines = GameObject.FindGameObjectsWithTag("Line");
+        foreach (var line in lines)
+        {
+            Destroy(line);
+        }
     }
 }
