@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,14 @@ public class DrawingManager : MonoBehaviour
         patternIndex = 0;
         isDrawing = false;
         SetPattern();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.LoadLevel(0);
+        }
     }
 
     private void SetPattern()
@@ -77,4 +86,5 @@ public class DrawingManager : MonoBehaviour
             Destroy(line);
         }
     }
+    
 }

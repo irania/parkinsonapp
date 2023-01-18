@@ -9,4 +9,8 @@ public class MenuHandler : MonoBehaviour
     {
         Application.LoadLevel ("DrawingScene");
     }
+    public void LoadSelfieScene()
+    {
+        Application.LoadLevel ("TakingSelfieScene");
+    }
 }
