@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CameraHandler : MonoBehaviour
 {
     WebCamTexture webcamTexture;
-    private Quaternion baseRotation;
+    public Text debug;
     void Start()
     {
         
@@ -16,34 +16,25 @@ public class CameraHandler : MonoBehaviour
         {
             Permission.RequestUserPermission(Permission.Camera);
         }
+        var size = gameObject.GetComponent<RectTransform>().sizeDelta;
+        var rotation = Quaternion.Euler(0, 0, -90);
         // Check if permission was granted
         if (Permission.HasUserAuthorizedPermission(Permission.Camera) && WebCamTexture.devices.Length>0 )
         {
 	        // Create a new WebCamTexture & Start the camera
-	        webcamTexture = new WebCamTexture(WebCamTexture.devices[WebCamTexture.devices.Length-1].name,Screen.width,Screen.height);
+	        webcamTexture = new WebCamTexture(WebCamTexture.devices[WebCamTexture.devices.Length-1].name);
 	        webcamTexture.Play();
 
 	        // Assign the WebCamTexture to a Material on a Quad object
+	        GetComponent<Image>().sprite = null;
 	        GetComponent<Image>().material.mainTexture = webcamTexture;
-	        transform.rotation = Quaternion.Euler(0, 0, -webcamTexture.videoRotationAngle);
-	        //baseRotation = transform.rotation;
-	        // float aspectRatio = Screen.width / Screen.height;
-	        // float width = transform.localScale.x;
-	        // float height = width / aspectRatio;
-	        // transform.localScale = new Vector3(-width, height, 1);
-	        //Vector3 scale = new Vector3(1, 1, 1);
-	        //transform.localScale = scale;
-	        //baseRotation = transform.rotation;
-	        // float size = gameObject.GetComponent<Renderer>().bounds.size.y;
-	        //
-	        // Vector3 rescale = gameObject.transform.localScale;
-	        //
-	        // rescale.y = Screen.height * rescale.y / size;
-	        //
-	        // gameObject.transform.localScale = rescale;
-	        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector3(Screen.height, Screen.width, 1);
-	        transform.localScale = new Vector3(1, -1, 1);
+	        rotation = Quaternion.Euler(0, 0, -webcamTexture.videoRotationAngle);
         }
+
+        transform.rotation = rotation;
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector3(size.y, size.x, 1);
+        transform.localScale = new Vector3(1f, -1f, 1);
+        debug.text = "size: " + size.x + " " + size.y + "\n" + Screen.height + ".";
 
     }
     private void Update()
