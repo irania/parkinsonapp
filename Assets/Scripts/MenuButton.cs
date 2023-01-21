@@ -31,4 +31,5 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         theIcon.color = highlitedColor; //Or however you do your color
         
     }
+    
 }

@@ -34,7 +34,6 @@ public class CameraHandler : MonoBehaviour
         transform.rotation = rotation;
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector3(size.y, size.x, 1);
         transform.localScale = new Vector3(1f, -1f, 1);
-        debug.text = "size: " + size.x + " " + size.y + "\n" + Screen.height + ".";
 
     }
     private void Update()

@@ -13,4 +13,17 @@ public class MenuHandler : MonoBehaviour
     {
         Application.LoadLevel ("TakingSelfieScene");
     }
+    public void LoadVisualEmotionScene()
+    {
+        Application.LoadLevel ("VisualEmotionScene");
+    }
+    public void LoadVoicsEmotionScene()
+    {
+        Application.LoadLevel ("VoiceEmotionScene");
+    }
+
+    public void OpenUserPanel()
+    {
+        
+    }
 }
