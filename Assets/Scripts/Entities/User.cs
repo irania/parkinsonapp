@@ -1,27 +1,26 @@
 ﻿using System;
 
-namespace Entities
+[Serializable]
+public class User
 {
-    public class User
-    {
-        public Guid Id { get; set; }
+    public string Id;
 
-        public string UserName { get; set; }
-        
-        public string FirstName { get; set; }
-        
-        public string LastName { get; set; }
+    public string UserName;
 
-        public string Password { get; set; }
-        
-        public DateTime LastActivity { set; get; }
-        
-        public DateTime FirstActivity { set; get; }
-        
-        public string Email { set; get; }
+    public string FirstName;
 
-        public Guid? AppId { get; set; }
-        
-    }
+    public string LastName;
 
+    public string Password;
+
+    public DateTime LastActivity;
+
+    public DateTime FirstActivity;
+
+    public string Email;
+
+    public string AppId;
+
+    public bool IsUploaded;
 }
+

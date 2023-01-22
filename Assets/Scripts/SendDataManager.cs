@@ -28,16 +28,25 @@ public class SendDataManager : Singleton<SendDataManager>
     /// Send Json to server
     /// </summary>
     /// <param name="json">Json format of game results object</param>
-    public void SendJson(string json)
+    public void SendJsonUser(string json,Func<string,int> afterCall=null)
     {
-        StartCoroutine(PostRequestCoroutine(json));
+        StartCoroutine(PostRequestCoroutine(Url+"users",json,afterCall));
+    }
+    /// <summary>
+    /// Send Json to server
+    /// </summary>
+    /// <param name="json">Json format of game results object</param>
+    private void SendJson(string url, string json,Func<string,int> afterCall=null)
+    {
+        StartCoroutine(PostRequestCoroutine(url,json,afterCall));
     }
 
     /// <summary>
     /// Post request coroutine
     /// </summary>
+    /// <param name="url">URL address</param>
     /// <param name="json">Json format of game results object</param>
-    private IEnumerator PostRequestCoroutine(string json)
+    private IEnumerator PostRequestCoroutine(string url, string json,Func<string,int> afterCall)
     {
         var jsonBinary = System.Text.Encoding.UTF8.GetBytes(json);
 
@@ -48,7 +57,7 @@ public class SendDataManager : Singleton<SendDataManager>
 
 
         UnityWebRequest www =
-            new UnityWebRequest(Url, "POST", downloadHandlerBuffer, uploadHandlerRaw);
+            new UnityWebRequest(url, "POST", downloadHandlerBuffer, uploadHandlerRaw);
 
         yield return www.SendWebRequest();
 
@@ -65,6 +74,8 @@ public class SendDataManager : Singleton<SendDataManager>
         else
         {
             Debug.Log(string.Format("Response: {0}", www.downloadHandler.text));
+            if(afterCall!=null)
+                afterCall(json);
 
         }
     }
@@ -72,10 +83,10 @@ public class SendDataManager : Singleton<SendDataManager>
     /// <summary>
     /// Save data in a temp file
     /// </summary>
-    private void SaveData(string json)
+    private void SaveData(string url, string json)
     {
         string folderPath = Application.persistentDataPath + "/";
-        string fileName = $@"{DateTime.Now.Ticks}.txt";
+        string fileName = $@"{url}-{DateTime.Now.Ticks}.txt";
         System.IO.File.WriteAllText(folderPath + fileName, json);
     }
 
@@ -89,7 +100,7 @@ public class SendDataManager : Singleton<SendDataManager>
             foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/"))
             {
                 String contents = System.IO.File.ReadAllText(file);
-                SendJson(contents);
+                SendJson(file.Split('-')[0],contents);
                 File.Delete(file);
             }
         }
