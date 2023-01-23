@@ -1,19 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.Video;
 
 public class TakeSelfieManager : MonoBehaviour
 {
-    [SerializeField] 
-    private List<Sprite> Emotions;
+    [FormerlySerializedAs("EmotionsVideoFiles")] [SerializeField] 
+    private List<string> emotionsVideoFiles;
     [SerializeField]
-    private SpriteRenderer Emotion;
+    private VideoPlayer EmotionPlayer;
     private int emotionIndex;
+    private string folderPath = "assets/resources/videos";
     
     private void Start()
     {
+        string[] files = Directory.GetFiles(folderPath, "*.wav", SearchOption.AllDirectories);
+        emotionsVideoFiles.AddRange(files);
         emotionIndex = 0;
-        SetSprite();
+        StartCoroutine(SetVideo());
     }
     private void Update()
     {
@@ -27,11 +33,11 @@ public class TakeSelfieManager : MonoBehaviour
     public void MoveNext()
     {
         emotionIndex++;
-        if (emotionIndex >= Emotions.Count)
+        if (emotionIndex >= emotionsVideoFiles.Count)
             GoHome();
         else
         {
-            SetSprite();
+            StartCoroutine(SetVideo());
         }
     }
 
@@ -40,8 +46,14 @@ public class TakeSelfieManager : MonoBehaviour
         Application.LoadLevel(0);
     }
 
-    private void SetSprite()
+    IEnumerator SetVideo()
     {
-        Emotion.sprite = Emotions[emotionIndex];
+        string filePath = emotionsVideoFiles[emotionIndex].Remove(0,17).Split('.')[0].Replace('\\','/');
+        // Set the clip to the audio source
+        EmotionPlayer.clip = Resources.Load<VideoClip>(filePath);
+        yield return new WaitForSeconds(1);
+        EmotionPlayer.Play();
+        
+        
     }
 }

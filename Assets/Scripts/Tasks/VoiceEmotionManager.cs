@@ -20,7 +20,7 @@ public class VoiceEmotionManager : MonoBehaviour
     private List<string> audioFiles;
     
     private int currentIndex;
-    private string folderPath = "assets/audios/voiceEmotion";
+    private string folderPath = "assets/resources/audios/voiceEmotion";
     private List<VoiceEmotionAnswer> answers;
     [SerializeField]
     private int selectedEmotion;
@@ -31,7 +31,7 @@ public class VoiceEmotionManager : MonoBehaviour
         audioFiles.AddRange(fileEntries);
         currentIndex = 0;
         answers = new List<VoiceEmotionAnswer>();
-
+        StartCoroutine(SetAudioSource());
     }
 
     public void GoNextSound()
@@ -43,21 +43,23 @@ public class VoiceEmotionManager : MonoBehaviour
             Pleasent = (int)PleasentSlider.value
         });
         currentIndex++;
-        if (audioFiles.Count < currentIndex)
-            SetAudioSource();
+        Debug.Log(audioFiles.Count);
+        Debug.Log(currentIndex);
+        if (audioFiles.Count > currentIndex)
+            StartCoroutine(SetAudioSource());
         else
             Application.LoadLevel(0);
     }
 
-    private void SetAudioSource()
+    IEnumerator  SetAudioSource()
     {
-        
-        string filePath = Path.Combine(folderPath,audioFiles[currentIndex]);
-
+        string filePath = audioFiles[currentIndex].Remove(0,17).Split('.')[0].Replace('\\','/');
+        yield return new WaitForSeconds(1);
         // Set the clip to the audio source
-        AudioSource.clip = Resources.Load<AudioClip>(filePath);;
+        AudioSource.clip = Resources.Load<AudioClip>(filePath);
         AudioSource.Play();
     }
+    
 
     public void SetEmotion(int number)
     {
