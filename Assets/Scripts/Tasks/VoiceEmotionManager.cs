@@ -16,24 +16,30 @@ public class VoiceEmotionManager : MonoBehaviour
 
     [SerializeField] 
     private Slider PleasentSlider;
-    [SerializeField]
-    private List<string> audioFiles;
+    private List<Object> audios;
     
     private int currentIndex;
-    private string folderPath = "assets/resources/audios/voiceEmotion";
+    private string folderPath = "audios/voiceEmotion";
     private List<VoiceEmotionAnswer> answers;
     [SerializeField]
     private int selectedEmotion;
+    [SerializeField] private Text DebugText;
 
     private void Start()
     {
-        string[] fileEntries = Directory.GetFiles(folderPath, "*.wav", SearchOption.AllDirectories);
-        audioFiles.AddRange(fileEntries);
+        audios = new List<Object>();
+        audios.AddRange(Resources.LoadAll(folderPath,typeof(AudioClip)));
         currentIndex = 0;
         answers = new List<VoiceEmotionAnswer>();
         StartCoroutine(SetAudioSource());
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.LoadLevel(0);
+        }
+    }
     public void GoNextSound()
     {
         answers.Add(new VoiceEmotionAnswer()
@@ -42,10 +48,10 @@ public class VoiceEmotionManager : MonoBehaviour
             Confidence = (int)ConfidenceSlider.value,
             Pleasent = (int)PleasentSlider.value
         });
+        ConfidenceSlider.value = 50;
+        PleasentSlider.value = 50;
         currentIndex++;
-        Debug.Log(audioFiles.Count);
-        Debug.Log(currentIndex);
-        if (audioFiles.Count > currentIndex)
+        if (audios.Count > currentIndex)
             StartCoroutine(SetAudioSource());
         else
             Application.LoadLevel(0);
@@ -53,10 +59,10 @@ public class VoiceEmotionManager : MonoBehaviour
 
     IEnumerator  SetAudioSource()
     {
-        string filePath = audioFiles[currentIndex].Remove(0,17).Split('.')[0].Replace('\\','/');
         yield return new WaitForSeconds(1);
         // Set the clip to the audio source
-        AudioSource.clip = Resources.Load<AudioClip>(filePath);
+        //AudioSource.clip = Resources.Load<AudioClip>(filePath);
+        AudioSource.clip = (AudioClip)audios[currentIndex];
         AudioSource.Play();
     }
     

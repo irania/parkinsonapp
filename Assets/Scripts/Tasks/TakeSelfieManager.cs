@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class TakeSelfieManager : MonoBehaviour
 {
     [FormerlySerializedAs("EmotionsVideoFiles")] [SerializeField] 
-    private List<string> emotionsVideoFiles;
+    private List<Object> emotionsVideoFiles;
     [SerializeField]
     private VideoPlayer EmotionPlayer;
     private int emotionIndex;
-    private string folderPath = "assets/resources/videos";
+    private string folderPath = "videos";
+    
     
     private void Start()
     {
-        string[] files = Directory.GetFiles(folderPath, "*.wav", SearchOption.AllDirectories);
-        emotionsVideoFiles.AddRange(files);
+        emotionsVideoFiles = new List<Object>();
+        emotionsVideoFiles.AddRange(Resources.LoadAll(folderPath,typeof(VideoClip)));
         emotionIndex = 0;
         StartCoroutine(SetVideo());
     }
@@ -48,9 +50,8 @@ public class TakeSelfieManager : MonoBehaviour
 
     IEnumerator SetVideo()
     {
-        string filePath = emotionsVideoFiles[emotionIndex].Remove(0,17).Split('.')[0].Replace('\\','/');
         // Set the clip to the audio source
-        EmotionPlayer.clip = Resources.Load<VideoClip>(filePath);
+        EmotionPlayer.clip = (VideoClip)emotionsVideoFiles[emotionIndex];
         yield return new WaitForSeconds(1);
         EmotionPlayer.Play();
         

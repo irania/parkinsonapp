@@ -68,7 +68,7 @@ public class SendDataManager : Singleton<SendDataManager>
             ;
             #elif UNITY_ANDROID
                 if (www.isNetworkError || www.downloadHandler.text.IndexOf("parsing")==-1)
-                    SaveData(json);
+                    SaveData(www.url,json);
             #endif
         }
         else
