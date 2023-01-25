@@ -19,7 +19,6 @@ public class Line : MonoBehaviour
     {
         if (points == null)
         {
-            Debug.Log("i was "+ position);
             points = new List<Vector2>();
             SetPoint(position);
             return;

@@ -9,9 +9,8 @@ public class ProgressBar : MonoBehaviour
 {
     [SerializeField] 
     private GameObject CirclePrefab;
-
-    [SerializeField] 
-    private GameObject[] Circles;
+    
+    private IList<GameObject> Circles;
 
     [SerializeField] 
     private Sprite FillCircle;
@@ -25,18 +24,33 @@ public class ProgressBar : MonoBehaviour
     {
         index = 0;
         GenerateCircles();
+        ActiveCircle();
     }
 
     private void GenerateCircles()
     {
-        
+        Circles = new List<GameObject>();
+        //generate circles
+        int n = (StepsNumber-1)*20;
+        for (int i = 0; i < StepsNumber; i++)
+        {
+            var newCircle = Instantiate(CirclePrefab,gameObject.transform);
+            newCircle.transform.localPosition = new Vector3(i* 40-n, 0, 0);
+            Circles.Add(newCircle);
+        }
+
     }
     
     public void GoNext()
     {
         index++;
-        if(index<Circles.Length)
-            Circles[index].GetComponent<SpriteRenderer>().sprite = FillCircle;
+        if (index < Circles.Count)
+            ActiveCircle();
+    }
+
+    public void ActiveCircle()
+    {
+        Circles[index].GetComponent<SpriteRenderer>().sprite = FillCircle;
     }
     
 }
