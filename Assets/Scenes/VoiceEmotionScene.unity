@@ -1274,7 +1274,6 @@ MonoBehaviour:
   AudioSource: {fileID: 1192410102}
   ConfidenceSlider: {fileID: 965307922}
   PleasentSlider: {fileID: 858612384}
-  audioFiles: []
   selectedEmotion: 0
   DebugText: {fileID: 562266534}
 --- !u!1 &1192410101

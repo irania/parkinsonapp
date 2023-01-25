@@ -21,6 +21,11 @@ public class MenuHandler : MonoBehaviour
     {
         Application.LoadLevel ("VoiceEmotionScene");
     }
+    
+    public void LoadQuestionareScene()
+    {
+        Application.LoadLevel ("QuestionareScene");
+    }
 
     public void OpenUserPanel()
     {

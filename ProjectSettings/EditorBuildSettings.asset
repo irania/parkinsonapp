@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VoiceEmotionScene.unity
     guid: ae3d151f2d2234840a2e04438c642885
+  - enabled: 1
+    path: Assets/Scenes/QuestionareScene.unity
+    guid: d597efbf3cfb2004c93a2091cceb5bfe
   m_configObjects: {}
