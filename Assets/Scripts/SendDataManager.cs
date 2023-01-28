@@ -2,8 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DefaultNamespace;
+using Entities;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 /// <summary>
 /// Send Data to server and save data if server was unavailable
@@ -14,6 +17,8 @@ public class SendDataManager : Singleton<SendDataManager>
     /// Server URL
     /// </summary>
     public string Url = "http://gamesdata.cognitivetests.ir/";
+    public const string AppId = "9A6E5919-7EED-4A2E-8887-C34E02949274";
+    public Text debugText;
     void Start()
     {
         #if UNITY_ANDROID
@@ -23,14 +28,22 @@ public class SendDataManager : Singleton<SendDataManager>
             InvokeRepeating("SendSavedFilesAndDelete", 0, 120.0f);
         #endif
     }
-
-    /// <summary>
-    /// Send Json to server
-    /// </summary>
-    /// <param name="json">Json format of game results object</param>
+    
     public void SendJsonUser(string json,Func<string,int> afterCall=null)
     {
         StartCoroutine(PostRequestCoroutine(Url+"users",json,afterCall));
+    }
+    
+    public void SendJsonData(GameData gameData)
+    {
+        string fileName = gameData.DataName+".txt";
+        Log(gameData.Data);    
+        StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + gameData.UserID,
+                gameData.Data,
+                fileName,
+                gameData.SceneName,
+                gameData.DataName));
+            
     }
     /// <summary>
     /// Send Json to server
@@ -63,7 +76,7 @@ public class SendDataManager : Singleton<SendDataManager>
 
         if (www.isNetworkError || www.downloadHandler.text.IndexOf("Success") == -1)
         {
-            Debug.LogError(string.Format("{0}: {1} json is: {2}", www.url, www.error, json));
+            Log(string.Format("{0}: {1} json is: {2}", www.url, www.error, json));
             #if UNITY_EDITOR
             ;
             #elif UNITY_ANDROID
@@ -73,13 +86,44 @@ public class SendDataManager : Singleton<SendDataManager>
         }
         else
         {
-            Debug.Log(string.Format("Response: {0}", www.downloadHandler.text));
+            Log(string.Format("Response: {0}", www.downloadHandler.text));
             if(afterCall!=null)
                 afterCall(json);
 
         }
     }
 
+    IEnumerator UploadFile(string apiUrl, string data, string fileName, string location, string rawData)
+    {
+        //UnityWebRequest www = new UnityWebRequest(apiUrl, "POST");
+        //var form = new WWWForm();
+            //form.AddBinaryData("file", data);
+            //form.AddField("location", location);
+            //form.AddField("rawdata", rawData);
+            //www.uploadHandler = new UploadHandlerRaw(form.data);
+            //www.SetRequestHeader("Content-Type", "multipart/form-data");
+            Log(data+" , "+fileName+", "+location+" , "+rawData);
+            List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+            //formData.Add(new MultipartFormDataSection("rawdata",rawData));
+            //formData.Add(new MultipartFormDataSection("location", location));
+            //formData.Add(new MultipartFormDataSection("file", data));
+            formData.Add(new MultipartFormFileSection("salam", "myfile.txt"));
+            UnityWebRequest www = UnityWebRequest.Post(apiUrl, formData);
+            // Send the request
+            yield return www.SendWebRequest();
+            
+            // Check for errors
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Log(string.Format("{0}: {1} json is: {2}", www.url, www.error, www.uploadedBytes));
+            }
+            else
+            {
+                Log(formData.ToString());
+                Log("Upload complete!");
+            }
+
+    }
     /// <summary>
     /// Save data in a temp file
     /// </summary>
@@ -106,7 +150,13 @@ public class SendDataManager : Singleton<SendDataManager>
         }
         catch (Exception ex)
         {
-            Debug.Log(ex.ToString());
+            Log(ex.ToString());
         }
+    }
+
+    private void Log(string message)
+    {
+        debugText.text = message;
+        Debug.Log(message);
     }
 }

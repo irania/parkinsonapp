@@ -71,5 +71,10 @@ namespace DefaultNamespace
         {
             CurrentUser = num;
         }
+
+        public User GetCurrentUser()
+        {
+            return Users[CurrentUser];
+        }
     }
 }

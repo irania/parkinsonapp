@@ -47,7 +47,7 @@ public class UserPanelHandler : MonoBehaviour
     private void SelectUser(int value)
     {
         DataManager.Instance.CurrentUser = UsersDropDown.value;
-        UserNameText.text = "Hi! " + DataManager.Instance.Users[DataManager.Instance.CurrentUser].UserName;
+        //UserNameText.text = "Hi! " + DataManager.Instance.Users[DataManager.Instance.CurrentUser].UserName;
     }
 
     public void OnCreateButtonClick()
