@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DefaultNamespace;
 using Entities;
 using UnityEngine;
@@ -24,7 +25,7 @@ public class SensorsReader : MonoBehaviour
     void Start()
     {
         #if !UNITY_EDITOR && UNITY_ANDROID
-            StartRecord = true
+            StartRecord = true;
         #endif
         if (StartRecord)
         {
@@ -60,7 +61,7 @@ public class SensorsReader : MonoBehaviour
 
     }
 
-    public void OnClick()
+    private void OnDestroy()
     {
         if (StartRecord)
         {
@@ -79,13 +80,21 @@ public class SensorsReader : MonoBehaviour
         gameData.Time = DateTime.Now.ToString();
 
         //user name
-        //gameData.UserID = DataManager.Instance.GetCurrentUser().Id;
-        gameData.UserID = "E5E15C8E-3708-44AC-B195-B4E9B1080E8F";
+        gameData.UserID = DataManager.Instance.GetCurrentUser().Id;
+        //gameData.UserID = "E5E15C8E-3708-44AC-B195-B4E9B1080E8F";
         
         //data
         gameData.DataName = "AccelerationSensor";
-        var lists = new {angularVelocities, accelerations, attitudes, gravities, times};
-        gameData.Data = JsonUtility.ToJson(lists);
+        var angularV = JsonHelper.ToJson(angularVelocities.ToArray());
+        var acceleration = JsonHelper.ToJson(accelerations.ToArray());
+        var attitude = JsonHelper.ToJson(attitudes.ToArray());
+        var gravity = JsonHelper.ToJson(gravities.ToArray());
+        var time = JsonHelper.ToJson(times.ToArray());
+        gameData.Data =
+            String.Format(
+                "\"angularVelocities\": {0}, \"accelerations\": {1}, \"attitudes\": {2}, \"gravities\": {3}, \"times\": {4} ",
+                angularV, acceleration, attitude, gravity, time);
+        gameData.Data = "{" + gameData.Data + "}";
 
         return gameData;
 

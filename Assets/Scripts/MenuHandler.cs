@@ -12,7 +12,11 @@ public class MenuHandler : MonoBehaviour
     private Text UserNameText;
     private void Update()
     {
-        UserNameText.text = "Hi! " + DataManager.Instance.Users[DataManager.Instance.CurrentUser].UserName;
+        //todo it has bug
+        if (DataManager.Instance.GetCurrentUser() is null)
+            UserNameText.text = "Hi! Please create an account";
+        else
+            UserNameText.text = "Hi! " + DataManager.Instance.GetCurrentUser().UserName;
     }
 
     public void LoadHandwritingScene()
