@@ -19,40 +19,54 @@ public class SensorsReader : MonoBehaviour
     private IList<Vector3> gravities;
     private IList<string> times;
     public GameData GameData;
+    private Boolean StartRecord = false;
 
     void Start()
     {
-        
-        InputSystem.EnableDevice(Gyroscope.current);
-        InputSystem.EnableDevice(Accelerometer.current);
-        InputSystem.EnableDevice(AttitudeSensor.current);
-        InputSystem.EnableDevice(GravitySensor.current);
+        #if !UNITY_EDITOR && UNITY_ANDROID
+            StartRecord = true
+        #endif
+        if (StartRecord)
+        {
+            InputSystem.EnableDevice(Gyroscope.current);
+            InputSystem.EnableDevice(Accelerometer.current);
+            InputSystem.EnableDevice(AttitudeSensor.current);
+            InputSystem.EnableDevice(GravitySensor.current);
 
-        angularVelocities = new List<Vector3>();
-        accelerations = new List<Vector3>();
-        attitudes = new List<Vector3>();
-        gravities = new List<Vector3>();
-        times = new List<string>();
+            angularVelocities = new List<Vector3>();
+            accelerations = new List<Vector3>();
+            attitudes = new List<Vector3>();
+            gravities = new List<Vector3>();
+            times = new List<string>();
+        }
     }
 
     void Update()
     {
-        Vector3 angularVelocity = Gyroscope.current.angularVelocity.ReadValue();
-        Vector3 acceleration = Accelerometer.current.acceleration.ReadValue();
-        Vector3 attitude = AttitudeSensor.current.attitude.ReadValue().eulerAngles; // ReadValue() returns a Quaternion
-        Vector3 gravity = GravitySensor.current.gravity.ReadValue();
-        
-        angularVelocities.Add(angularVelocity);
-        accelerations.Add(acceleration);
-        attitudes.Add(attitude);
-        gravities.Add(gravity);
-        times.Add(DateTime.Now.ToString());
+        if (StartRecord)
+        {
+            Vector3 angularVelocity = Gyroscope.current.angularVelocity.ReadValue();
+            Vector3 acceleration = Accelerometer.current.acceleration.ReadValue();
+            Vector3 attitude =
+                AttitudeSensor.current.attitude.ReadValue().eulerAngles; // ReadValue() returns a Quaternion
+            Vector3 gravity = GravitySensor.current.gravity.ReadValue();
+
+            angularVelocities.Add(angularVelocity);
+            accelerations.Add(acceleration);
+            attitudes.Add(attitude);
+            gravities.Add(gravity);
+            times.Add(DateTime.Now.ToString());
+        }
+
     }
 
     public void OnClick()
     {
-        GameData = CreateGameData();
-        SendDataManager.Instance.SendJsonData(GameData);
+        if (StartRecord)
+        {
+            GameData = CreateGameData();
+            SendDataManager.Instance.SendJsonData(GameData);
+        }
     }
 
     private GameData CreateGameData()

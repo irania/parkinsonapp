@@ -41,8 +41,6 @@ namespace DefaultNamespace
 
         public void UploadUser(User u)
         {
-            Debug.Log(u.UserName.ToString());
-            Debug.Log(JsonUtility.ToJson(u));
             SendDataManager.Instance.SendJsonUser(JsonUtility.ToJson(u),AfterUploadUser);
         }
 
@@ -88,9 +86,11 @@ namespace DefaultNamespace
             {
                 // Load the JSON string from PlayerPrefs
                 string json = PlayerPrefs.GetString(PlayerPrefabKey);
-
+                Debug.Log("load json:"+json);
                 // Convert the JSON string to a list of objects
-                return JsonUtility.FromJson<List<User>>(json);
+                var objects = JsonHelper.FromJson<User>(json);
+                return objects!=null && objects.Length>0?objects.ToList(): new List<User>();
+                
             }
             else
             {
@@ -100,8 +100,7 @@ namespace DefaultNamespace
         private void SaveUsers(List<User> users)
         {
             // Convert the list of objects to a JSON string
-            string json = JsonUtility.ToJson(users);
-
+            string json = JsonHelper.ToJson<User>(users.ToArray());
             // Save the JSON string to PlayerPrefs
             PlayerPrefs.SetString(PlayerPrefabKey, json);
             PlayerPrefs.Save();

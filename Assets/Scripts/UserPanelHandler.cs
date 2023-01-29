@@ -17,9 +17,6 @@ public class UserPanelHandler : MonoBehaviour
     [SerializeField] 
     private Dropdown UsersDropDown;
 
-    [SerializeField] 
-    private Text UserNameText;
-
     private void Awake()
     {
         SetDropDown();
@@ -47,7 +44,6 @@ public class UserPanelHandler : MonoBehaviour
     private void SelectUser(int value)
     {
         DataManager.Instance.CurrentUser = UsersDropDown.value;
-        //UserNameText.text = "Hi! " + DataManager.Instance.Users[DataManager.Instance.CurrentUser].UserName;
     }
 
     public void OnCreateButtonClick()
