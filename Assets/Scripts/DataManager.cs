@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Entities;
@@ -14,10 +15,13 @@ namespace DefaultNamespace
         public static GameData UnSendData;
         public List<User> Users;
         private const string AppId = "9A6E5919-7EED-4A2E-8887-C34E02949274";
+        private const string PlayerPrefabKey = "Users";
 
         private void Start()
         {
-            Users = new List<User>();
+            Users = LoadFromFile();
+            if (Users.Count > 0)
+                CurrentUser = Users.Count - 1;
         }
 
         public User CreateNewUser(string name)
@@ -31,6 +35,7 @@ namespace DefaultNamespace
             };
             Users.Add(newUser);
             UploadUser(newUser);
+            SaveUsers(Users);
             return newUser;
         }
 
@@ -75,6 +80,31 @@ namespace DefaultNamespace
         public User GetCurrentUser()
         {
             return Users[CurrentUser];
+        }
+
+        private List<User> LoadFromFile()
+        {
+            if (PlayerPrefs.HasKey(PlayerPrefabKey))
+            {
+                // Load the JSON string from PlayerPrefs
+                string json = PlayerPrefs.GetString(PlayerPrefabKey);
+
+                // Convert the JSON string to a list of objects
+                return JsonUtility.FromJson<List<User>>(json);
+            }
+            else
+            {
+                return new List<User>();
+            }
+        }
+        private void SaveUsers(List<User> users)
+        {
+            // Convert the list of objects to a JSON string
+            string json = JsonUtility.ToJson(users);
+
+            // Save the JSON string to PlayerPrefs
+            PlayerPrefs.SetString(PlayerPrefabKey, json);
+            PlayerPrefs.Save();
         }
     }
 }

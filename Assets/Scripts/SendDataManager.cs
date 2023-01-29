@@ -95,33 +95,27 @@ public class SendDataManager : Singleton<SendDataManager>
 
     IEnumerator UploadFile(string apiUrl, string data, string fileName, string location, string rawData)
     {
-        //UnityWebRequest www = new UnityWebRequest(apiUrl, "POST");
-        //var form = new WWWForm();
-            //form.AddBinaryData("file", data);
-            //form.AddField("location", location);
-            //form.AddField("rawdata", rawData);
-            //www.uploadHandler = new UploadHandlerRaw(form.data);
-            //www.SetRequestHeader("Content-Type", "multipart/form-data");
-            Log(data+" , "+fileName+", "+location+" , "+rawData);
-            List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-            //formData.Add(new MultipartFormDataSection("rawdata",rawData));
-            //formData.Add(new MultipartFormDataSection("location", location));
-            //formData.Add(new MultipartFormDataSection("file", data));
-            formData.Add(new MultipartFormFileSection("salam", "myfile.txt"));
-            UnityWebRequest www = UnityWebRequest.Post(apiUrl, formData);
-            // Send the request
-            yield return www.SendWebRequest();
+        Log(data+" , "+fileName+", "+location+" , "+rawData);
+
+        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        formData.Add(new MultipartFormDataSection("rawdata",rawData));
+        formData.Add(new MultipartFormDataSection("location", location));
+        formData.Add(new MultipartFormFileSection("file", System.Text.Encoding.UTF8.GetBytes(data), fileName, "application/octet-stream"));
+        UnityWebRequest www = UnityWebRequest.Post(apiUrl, formData);
+        
+        // Send the request
+        yield return www.SendWebRequest();
             
-            // Check for errors
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Log(string.Format("{0}: {1} json is: {2}", www.url, www.error, www.uploadedBytes));
-            }
-            else
-            {
-                Log(formData.ToString());
-                Log("Upload complete!");
-            }
+        // Check for errors
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Log(string.Format("{0}: {1} json is: {2}", www.url, www.error, www.uploadedBytes));
+        }
+        else
+        {
+            //Log(formData.ToString());
+            Log("Upload complete!");
+        }
 
     }
     /// <summary>
@@ -156,7 +150,6 @@ public class SendDataManager : Singleton<SendDataManager>
 
     private void Log(string message)
     {
-        debugText.text = message;
         Debug.Log(message);
     }
 }

@@ -22,6 +22,7 @@ public class SensorsReader : MonoBehaviour
 
     void Start()
     {
+        
         InputSystem.EnableDevice(Gyroscope.current);
         InputSystem.EnableDevice(Accelerometer.current);
         InputSystem.EnableDevice(AttitudeSensor.current);
@@ -40,7 +41,7 @@ public class SensorsReader : MonoBehaviour
         Vector3 acceleration = Accelerometer.current.acceleration.ReadValue();
         Vector3 attitude = AttitudeSensor.current.attitude.ReadValue().eulerAngles; // ReadValue() returns a Quaternion
         Vector3 gravity = GravitySensor.current.gravity.ReadValue();
-
+        
         angularVelocities.Add(angularVelocity);
         accelerations.Add(acceleration);
         attitudes.Add(attitude);
@@ -70,8 +71,8 @@ public class SensorsReader : MonoBehaviour
         //data
         gameData.DataName = "AccelerationSensor";
         var lists = new {angularVelocities, accelerations, attitudes, gravities, times};
-        //gameData.Data = JsonUtility.ToJson(lists);
-        gameData.Data = "salam";
+        gameData.Data = JsonUtility.ToJson(lists);
+
         return gameData;
 
 
