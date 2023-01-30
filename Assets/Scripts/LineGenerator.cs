@@ -15,7 +15,7 @@ public class LineGenerator : MonoBehaviour
     private InputAction _pos;
     private Vector2 beforePos;
 
-    private void Start()
+    private void Awake()
     {
         //enable is required only if you're not using PlayerInput anywhere else
         _inputMap.Enable();
@@ -26,6 +26,7 @@ public class LineGenerator : MonoBehaviour
         //listen from clicks
         _click.started += DrawingProcess;
         _click.canceled += EndDrawingProcess;
+        
     }
     
 
@@ -33,8 +34,11 @@ public class LineGenerator : MonoBehaviour
     {
         //get the value from the position
         Log($"click action: {_pos.ReadValue<Vector2>()}");
-        GameObject newLine = Instantiate(linePrefab);
-        activeLine = newLine.GetComponent<Line>();
+        if (this.isActiveAndEnabled)
+        {
+            GameObject newLine = Instantiate(linePrefab);
+            activeLine = newLine.GetComponent<Line>();
+        }
     }
 
     private void Update()

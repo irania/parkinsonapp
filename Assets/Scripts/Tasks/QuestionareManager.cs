@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Entities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ namespace DefaultNamespace.Tasks
         }
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Keyboard.current.escapeKey.isPressed)
             {
                 Application.LoadLevel(0);
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Entities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class VoiceEmotionManager : MonoBehaviour
@@ -35,7 +36,7 @@ public class VoiceEmotionManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Keyboard.current.escapeKey.isPressed)
         {
             Application.LoadLevel(0);
         }

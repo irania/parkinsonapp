@@ -9,6 +9,7 @@ public class Line : MonoBehaviour
     public LineRenderer LineRenderer;
 
     private List<Vector2> points;
+    private List<long> times;
 
     public void Awake()
     {
@@ -20,6 +21,7 @@ public class Line : MonoBehaviour
         if (points == null)
         {
             points = new List<Vector2>();
+            times = new List<long>();
             SetPoint(position);
             return;
         }
@@ -33,8 +35,18 @@ public class Line : MonoBehaviour
     void SetPoint(Vector2 point)
     {
         points.Add(point);
-        Debug.Log("i add "+ point+" "+points[points.Count-1]);
+        times.Add(DateTime.Now.Ticks);
         LineRenderer.positionCount = points.Count;
         LineRenderer.SetPosition(points.Count()-1,point);
+    }
+
+    public List<Vector2> getPoints()
+    {
+        return points;
+    }
+
+    public List<long> getTimes()
+    {
+        return times;
     }
 }

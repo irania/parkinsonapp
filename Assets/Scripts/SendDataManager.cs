@@ -6,6 +6,7 @@ using DefaultNamespace;
 using Entities;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -36,7 +37,15 @@ public class SendDataManager : Singleton<SendDataManager>
     
     public void SendJsonData(GameData gameData)
     {
-        string fileName = gameData.DataName+".txt";
+        //scene name
+        gameData.SceneName = SceneManager.GetActiveScene().name;
+
+        //time
+        gameData.Time = DateTime.Now.ToString();
+
+        //user name
+        gameData.UserID = DataManager.Instance.GetCurrentUser().Id;
+        string fileName = gameData.DataName+"_"+DateTime.Now.Ticks+".txt";
         Log(gameData.Data);    
         StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + gameData.UserID,
                 gameData.Data,

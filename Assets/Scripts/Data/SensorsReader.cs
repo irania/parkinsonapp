@@ -73,16 +73,7 @@ public class SensorsReader : MonoBehaviour
     private GameData CreateGameData()
     {
         var gameData = new GameData();
-        //scene name
-        gameData.SceneName = SceneManager.GetActiveScene().name;
 
-        //time
-        gameData.Time = DateTime.Now.ToString();
-
-        //user name
-        gameData.UserID = DataManager.Instance.GetCurrentUser().Id;
-        //gameData.UserID = "E5E15C8E-3708-44AC-B195-B4E9B1080E8F";
-        
         //data
         gameData.DataName = "AccelerationSensor";
         var angularV = JsonHelper.ToJson(angularVelocities.ToArray());

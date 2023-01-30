@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class DrawingManager : MonoBehaviour
 {
@@ -19,6 +20,12 @@ public class DrawingManager : MonoBehaviour
     private SpriteRenderer SymmetricPattern;
     [SerializeField]
     private List<Sprite> Patterns;
+
+    [SerializeField] 
+    private string[] InstructionTexts;
+
+    [SerializeField] 
+    private Text InstructionText;
 
 
     private int patternIndex;
@@ -47,6 +54,7 @@ public class DrawingManager : MonoBehaviour
         FirstPattern.sprite = Patterns[patternIndex];
         SecondPattern.sprite = null;
         SymmetricPattern.sprite = null;
+        InstructionText.text = InstructionTexts[patternIndex];
         if (patternIndex > 5)
             SymmetricPattern.sprite = Patterns[patternIndex];
         else
