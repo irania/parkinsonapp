@@ -16,11 +16,10 @@ namespace DefaultNamespace
         private List<User> Users;
         private const string AppId = "9A6E5919-7EED-4A2E-8887-C34E02949274";
         private const string PlayerPrefabKey = "Users";
-        [SerializeField]
-        private GameObject UserPanel;
 
         private void Start()
         {
+            DontDestroyOnLoad(gameObject);
             Users = LoadFromFile();
             if (Users.Count > 0)
                 CurrentUser = Users.Count - 1;

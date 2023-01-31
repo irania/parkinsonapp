@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DefaultNamespace;
 using Entities;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,17 +22,17 @@ public class VoiceEmotionManager : MonoBehaviour
     
     private int currentIndex;
     private string folderPath = "audios/voiceEmotion";
-    private List<VoiceEmotionAnswer> answers;
     [SerializeField]
     private int selectedEmotion;
     [SerializeField] private Text DebugText;
+
+    [SerializeField] private Toggle[] EmotionButtons;
 
     private void Start()
     {
         audios = new List<Object>();
         audios.AddRange(Resources.LoadAll(folderPath,typeof(AudioClip)));
         currentIndex = 0;
-        answers = new List<VoiceEmotionAnswer>();
         StartCoroutine(SetAudioSource());
     }
     private void Update()
@@ -40,29 +41,26 @@ public class VoiceEmotionManager : MonoBehaviour
         {
             Application.LoadLevel(0);
         }
+        EmotionButtons[selectedEmotion].Select();
     }
     public void GoNextSound()
     {
-        answers.Add(new VoiceEmotionAnswer()
-        {
-            Emotion = selectedEmotion,
-            Confidence = (int)ConfidenceSlider.value,
-            Pleasent = (int)PleasentSlider.value
-        });
+        QuestionareDataHandler.Instance.AddAnswer(selectedEmotion,(int)ConfidenceSlider.value,(int)PleasentSlider.value);
         ConfidenceSlider.value = 50;
         PleasentSlider.value = 50;
         currentIndex++;
         if (audios.Count > currentIndex)
             StartCoroutine(SetAudioSource());
         else
+        {
+            QuestionareDataHandler.Instance.SendData();
             Application.LoadLevel(0);
+        }
     }
 
     IEnumerator  SetAudioSource()
     {
         yield return new WaitForSeconds(1);
-        // Set the clip to the audio source
-        //AudioSource.clip = Resources.Load<AudioClip>(filePath);
         AudioSource.clip = (AudioClip)audios[currentIndex];
         AudioSource.Play();
     }

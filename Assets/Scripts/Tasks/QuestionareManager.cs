@@ -14,20 +14,17 @@ namespace DefaultNamespace.Tasks
         private Text QuestionText;
         [SerializeField] 
         private AudioSource AudioSource;
-        [SerializeField] 
-        private Slider AnswerSlider;
         [FormerlySerializedAs("TextQuestion")] [SerializeField]
         private string[] TextQuestions;
         [FormerlySerializedAs("VoiceQuestion")] [SerializeField]
         private AudioClip[] VoiceQuestions;
         private int currentIndex;
-
-        private List<int> answers;
+        [SerializeField]
+        private RateAnswerScript RateAnswer;
 
         private void Start()
         {
             currentIndex = 0;
-            answers = new List<int>();
             SetQuestion();
         }
         private void Update()
@@ -45,17 +42,23 @@ namespace DefaultNamespace.Tasks
                 AudioSource.clip = VoiceQuestions[currentIndex];
                 AudioSource.Play();
             }
+
+            RateAnswer.SetValue(2);
         }
 
         public void NextButtonClick()
         {
-            Debug.Log(answers);
-            answers.Add((int)AnswerSlider.value);
+            QuestionareDataHandler.Instance.AddAnswer(RateAnswer.Value);
             currentIndex++;
             if (TextQuestions.Length > currentIndex)
+            {
                 SetQuestion();
+            }
             else
+            {
+                QuestionareDataHandler.Instance.SendData();
                 Application.LoadLevel(0);
+            }
         }
         
     }

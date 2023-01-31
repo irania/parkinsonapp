@@ -22,6 +22,7 @@ public class SendDataManager : Singleton<SendDataManager>
     public Text debugText;
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         #if UNITY_ANDROID
             System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/");
 
