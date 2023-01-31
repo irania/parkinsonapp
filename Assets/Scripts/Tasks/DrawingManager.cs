@@ -26,7 +26,8 @@ public class DrawingManager : MonoBehaviour
 
     [SerializeField] 
     private Text InstructionText;
-
+    [SerializeField] 
+    private Text debugText;
 
     private int patternIndex;
 
@@ -72,9 +73,28 @@ public class DrawingManager : MonoBehaviour
     public void DoneButton()
     {
         patternIndex++;
+        StartCoroutine(GoNext());
+        
+        
+    }
+
+    IEnumerator GoNext()
+    {
+        var fileName = Application.persistentDataPath+"dr" + patternIndex +"-"+DateTime.Now.Ticks+".png";
+        try
+        {
+            ScreenCapture.CaptureScreenshot(fileName);
+        }
+        catch (Exception e)
+        {
+            debugText.text = e.Message;
+            throw;
+        }
+        yield return new WaitForSeconds(2);
+        SendDataManager.Instance.SendFile(fileName);
         if (patternIndex== Patterns.Count)
         {
-            Application.LoadLevel ("MainMenuScene");
+            Application.LoadLevel (0);
         }
         else
         {

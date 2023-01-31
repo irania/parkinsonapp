@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using DefaultNamespace;
 using Entities;
 using UnityEngine;
@@ -49,11 +50,21 @@ public class SendDataManager : Singleton<SendDataManager>
         string fileName = gameData.DataName+"_"+DateTime.Now.Ticks+".txt";
         Log(gameData.Data);    
         StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + gameData.UserID,
-                gameData.Data,
-                fileName,
-                gameData.SceneName,
-                gameData.DataName));
+            Encoding.ASCII.GetBytes(gameData.Data),
+            fileName,
+            gameData.SceneName,
+            gameData.DataName,
+            "image/png"));
             
+    }
+    public void SendFile(string fileName)
+    {
+        StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + DataManager.Instance.GetCurrentUser().Id,
+            System.IO.File.ReadAllBytes(fileName),
+            fileName,
+            SceneManager.GetActiveScene().name,
+            "Image",
+            "application/octet-stream"));
     }
     /// <summary>
     /// Send Json to server
@@ -103,14 +114,14 @@ public class SendDataManager : Singleton<SendDataManager>
         }
     }
 
-    IEnumerator UploadFile(string apiUrl, string data, string fileName, string location, string rawData)
+    IEnumerator UploadFile(string apiUrl, byte[] data, string fileName, string location, string rawData,string contentType)
     {
         Log(data+" , "+fileName+", "+location+" , "+rawData);
 
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("rawdata",rawData));
         formData.Add(new MultipartFormDataSection("location", location));
-        formData.Add(new MultipartFormFileSection("file", System.Text.Encoding.UTF8.GetBytes(data), fileName, "application/octet-stream"));
+        formData.Add(new MultipartFormFileSection("file", data, fileName, contentType));
         UnityWebRequest www = UnityWebRequest.Post(apiUrl, formData);
         
         // Send the request
@@ -162,4 +173,6 @@ public class SendDataManager : Singleton<SendDataManager>
     {
         Debug.Log(message);
     }
+
+
 }
