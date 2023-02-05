@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CameraHandler : MonoBehaviour
@@ -38,9 +39,7 @@ public class CameraHandler : MonoBehaviour
     }
     private void Update()
     {
-	    
-	    
-	    if (Input.GetKeyDown(KeyCode.Space))
+	    if (Keyboard.current.escapeKey.isPressed)
         {
            TakePicture();
         }
@@ -48,24 +47,23 @@ public class CameraHandler : MonoBehaviour
 
     public void TakePicture()
     {
-        // Stop the camera
-                webcamTexture.Stop();
+	    
+	    // Create a new Texture2D with the same dimensions as the WebCamTexture
+	    Texture2D picture = new Texture2D(webcamTexture.width, webcamTexture.height);
 
-                // Create a new Texture2D with the same dimensions as the WebCamTexture
-                Texture2D picture = new Texture2D(webcamTexture.width, webcamTexture.height);
+	    // Copy the pixels from the WebCamTexture to the new Texture2D
+	    picture.SetPixels(webcamTexture.GetPixels());
+	    picture.Apply();
 
-                // Copy the pixels from the WebCamTexture to the new Texture2D
-                picture.SetPixels(webcamTexture.GetPixels());
-                picture.Apply();
+	    // Encode the Texture2D as a PNG
+        byte[] bytes = picture.EncodeToPNG();
 
-                // Encode the Texture2D as a PNG
-                byte[] bytes = picture.EncodeToPNG();
+	    // Save the PNG to the device's photo gallery
+	    File.WriteAllBytes(Application.persistentDataPath + "/photo.png", bytes);
 
-                // Save the PNG to the device's photo gallery
-                File.WriteAllBytes(Application.persistentDataPath + "/photo.png", bytes);
-
-                // Restart the camera
-                webcamTexture.Play();
+	    webcamTexture.Stop();
+	    // Restart the camera
+	    webcamTexture.Play();
             
     }
 

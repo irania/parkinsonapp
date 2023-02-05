@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using Object = UnityEngine.Object;
 
 public class TakeSelfieManager : MonoBehaviour
 {
@@ -15,10 +17,11 @@ public class TakeSelfieManager : MonoBehaviour
     private VideoPlayer EmotionPlayer;
     private int emotionIndex;
     private string folderPath = "videos";
-    
+    private ScreenShotHandler ScreenShotHandler;
     
     private void Start()
     {
+        ScreenShotHandler = gameObject.GetComponent<ScreenShotHandler>();
         emotionsVideoFiles = new List<Object>();
         emotionsVideoFiles.AddRange(Resources.LoadAll(folderPath,typeof(VideoClip)));
         emotionIndex = 0;
@@ -36,12 +39,22 @@ public class TakeSelfieManager : MonoBehaviour
     public void MoveNext()
     {
         emotionIndex++;
+        StartCoroutine(SendScreenShotAndNext());
+    }
+
+    private IEnumerator SendScreenShotAndNext()
+    {
+        string fileName = "emo" + emotionIndex + "-" + DateTime.Now.Ticks+".png";
+        StartCoroutine(ScreenShotHandler.TakeScreenShotAndSave(fileName));
+        yield return new WaitForSeconds(2);
+        SendDataManager.Instance.SendFile(fileName);
         if (emotionIndex >= emotionsVideoFiles.Count)
             GoHome();
         else
         {
             StartCoroutine(SetVideo());
         }
+        yield return new WaitForSeconds(1);
     }
 
     private void GoHome()
@@ -55,7 +68,5 @@ public class TakeSelfieManager : MonoBehaviour
         EmotionPlayer.clip = (VideoClip)emotionsVideoFiles[emotionIndex];
         yield return new WaitForSeconds(1);
         EmotionPlayer.Play();
-        
-        
     }
 }

@@ -54,17 +54,17 @@ public class SendDataManager : Singleton<SendDataManager>
             fileName,
             gameData.SceneName,
             gameData.DataName,
-            "image/png"));
+            "application/octet-stream"));
             
     }
     public void SendFile(string fileName)
     {
         StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + DataManager.Instance.GetCurrentUser().Id,
-            System.IO.File.ReadAllBytes(fileName),
+            File.ReadAllBytes(Application.persistentDataPath+"/"+fileName),
             fileName,
             SceneManager.GetActiveScene().name,
             "Image",
-            "application/octet-stream"));
+            "image/png"));
     }
     /// <summary>
     /// Send Json to server
@@ -158,7 +158,7 @@ public class SendDataManager : Singleton<SendDataManager>
         {
             foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/"))
             {
-                String contents = System.IO.File.ReadAllText(file);
+                String contents = File.ReadAllText(file);
                 SendJson(file.Split('-')[0],contents);
                 File.Delete(file);
             }
