@@ -6,6 +6,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {
     #region Fields and Properties
     private static T _instance;
+    [SerializeField]
     private bool isPersistant;
     public static T Instance
     {

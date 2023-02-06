@@ -88,7 +88,7 @@ public class DrawingManager : MonoBehaviour
         var fileName = "dr" + patternIndex +"-"+DateTime.Now.Ticks+".png";
         StartCoroutine(ScreenShotHandler.TakeScreenShotAndSave(fileName));
         yield return new WaitForSeconds(2);
-        SendDataManager.Instance.SendFile(fileName);
+        SendDataManager.Instance.SendImageFile(fileName);
         if (patternIndex== Patterns.Count)
         {
             Application.LoadLevel (0);

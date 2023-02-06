@@ -38,6 +38,7 @@ public class UserPanelHandler : MonoBehaviour
     public void OnSelectButtonClick()
     {
         SelectUser(UsersDropDown.value);
+        gameObject.SetActive(false);
         
     }
 

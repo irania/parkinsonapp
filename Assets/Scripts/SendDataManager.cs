@@ -57,7 +57,7 @@ public class SendDataManager : Singleton<SendDataManager>
             "application/octet-stream"));
             
     }
-    public void SendFile(string fileName)
+    public void SendImageFile(string fileName)
     {
         StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + DataManager.Instance.GetCurrentUser().Id,
             File.ReadAllBytes(Application.persistentDataPath+"/"+fileName),

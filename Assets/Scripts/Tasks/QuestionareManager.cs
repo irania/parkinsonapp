@@ -39,7 +39,7 @@ namespace DefaultNamespace.Tasks
             if (currentIndex < TextQuestions.Length)
             {
                 QuestionText.text = TextQuestions[currentIndex];
-                AudioSource.clip = VoiceQuestions[currentIndex];
+//                AudioSource.clip = VoiceQuestions[currentIndex];
                 AudioSource.Play();
             }
 

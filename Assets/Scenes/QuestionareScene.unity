@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46220b2bce1b43658b33aa1d4df7798d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPersistant: 0
 --- !u!4 &33542573
 Transform:
   m_ObjectHideFlags: 0
@@ -716,7 +717,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 386307890, guid: cdc77a6db4f46654b8a6331c37e67505, type: 3}
       propertyPath: StepsNumber
-      value: 3
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1021983400377466296, guid: cdc77a6db4f46654b8a6331c37e67505, type: 3}
       propertyPath: m_Pivot.x
@@ -805,6 +806,10 @@ PrefabInstance:
     - target: {fileID: 1520018380308587766, guid: cdc77a6db4f46654b8a6331c37e67505, type: 3}
       propertyPath: m_Name
       value: ProgressBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520018380308587766, guid: cdc77a6db4f46654b8a6331c37e67505, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdc77a6db4f46654b8a6331c37e67505, type: 3}
@@ -1086,14 +1091,19 @@ MonoBehaviour:
   QuestionText: {fileID: 680376254}
   AudioSource: {fileID: 75248923}
   TextQuestions:
-  - Over the past week have you felt low, sad, hopeless, or unable to enjoy things?
-    If yes, was this feeling for longer than one day at a time? Did it make it difficult
-    for you carry out your usual activities or to be with people?
-  - Over the past week have you felt nervous, worried, or tense? If yes, was this
-    feeling for longer than one day at a time? Did it make it difficult for you to
-    follow your usual activities or to be with other people?
-  - Over the past week, have you had trouble going to sleep at night or staying asleep
-    through the night? Consider how rested you felt after waking up in the morning.
+  - do you have noticed some difficulty with movement, coordination and speed?
+  - do you have tremors or shaking in the past week?
+  - do you have been experiencing more noticeable shaking in your hands and arms
+    when you where at rest?
+  - do you have noticed some slurring or speech problems lately?
+  - how much difficulty do you have in swallowing?
+  - do you have been feeling more rigid and stiff in your arms, legs or writs?
+  - Do you experience difficulties with your handwriting? Have you noticed a decrease
+    in the size or legibility of your writing lately?
+  - do you have noticed some difficulty with smiling and blinking?
+  - ' how would you rate your sleep patterns and dreams in the past week?'
+  - how would you rate your sense of smell in the past week?
+  - do you have been feeling more forgetful and having trouble focusing?
   VoiceQuestions:
   - {fileID: 8300000, guid: badec97c1f89a0147be314051710dc87, type: 3}
   - {fileID: 8300000, guid: 5fbf70f5860db794c9e92723085ff367, type: 3}
@@ -1292,21 +1302,29 @@ PrefabInstance:
       propertyPath: m_Text
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1140020110182507006, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
+      propertyPath: m_Text
+      value: usually
+      objectReference: {fileID: 0}
     - target: {fileID: 1922836617052885464, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_Text
-      value: 1
+      value: NO
       objectReference: {fileID: 0}
     - target: {fileID: 3942731205955843734, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_Text
-      value: 2
+      value: rarely
       objectReference: {fileID: 0}
     - target: {fileID: 4513365827477193977, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_Text
-      value: 4
+      value: always
+      objectReference: {fileID: 0}
+    - target: {fileID: 6063757829513181677, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -188
       objectReference: {fileID: 0}
     - target: {fileID: 6643685712549006210, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 6999906065747200456, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_Name
@@ -1378,11 +1396,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7803539479227196874, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 125
+      value: 121
       objectReference: {fileID: 0}
     - target: {fileID: 7803539479227196874, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -367
+      value: -302
       objectReference: {fileID: 0}
     - target: {fileID: 7803539479227196874, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1398,7 +1416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7873282783114882693, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -119
+      value: -19
       objectReference: {fileID: 0}
     - target: {fileID: 8011583755315909456, guid: 5c9225bceaf168d4eb76f3716cce2ace, type: 3}
       propertyPath: m_AnchoredPosition.x
