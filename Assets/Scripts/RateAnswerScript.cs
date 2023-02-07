@@ -29,15 +29,11 @@ public class RateAnswerScript : MonoBehaviour
     public void SetValue(int number)
     {
         Value = number;
-        for (int i = 0; i <= number;i++)
-        {
-            Circles[i].sprite = FillSprite;
-        }
-
-        for (int i = number + 1; i < Circles.Count; i++)
+        for(int i = 0; i < Circles.Count; i++)
         {
             Circles[i].sprite = EmptySprite;
         }
+        Circles[number].sprite = FillSprite;
     }
     
 }

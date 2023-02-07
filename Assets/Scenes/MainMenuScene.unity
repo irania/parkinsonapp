@@ -835,7 +835,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Visual Emotion
+  m_Text: Profile
 --- !u!222 &569309550
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2312,7 +2312,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 800824665}
         m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
-        m_MethodName: LoadHandwritingScene
+        m_MethodName: LoadProfile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3181,10 +3181,22 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 2117699152}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2117699155}
+        m_TargetAssemblyTypeName: LanguageToggle, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2117699155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3199,7 +3211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FaImage: {fileID: -5154189640090123692, guid: 83ad26380d35f594c8e044f64827ffd4, type: 3}
   EnImage: {fileID: -643588312621719292, guid: 83ad26380d35f594c8e044f64827ffd4, type: 3}
-  ToggleImage: {fileID: 0}
+  ToggleImage: {fileID: 2117699152}
 --- !u!1001 &7912982583108921669
 PrefabInstance:
   m_ObjectHideFlags: 0

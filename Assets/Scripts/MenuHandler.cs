@@ -40,7 +40,14 @@ public class MenuHandler : MonoBehaviour
     {
         Application.LoadLevel ("QuestionareScene");
     }
-
+    public void LoadProfile()
+    {
+        Application.LoadLevel ("ProfileScene");
+    }
+    public void LoadPhysical()
+    {
+        Application.LoadLevel ("PhysicalScene");
+    }
     public void OpenUserPanel()
     {
         
