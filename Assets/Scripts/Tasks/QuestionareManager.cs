@@ -16,8 +16,11 @@ namespace DefaultNamespace.Tasks
         private AudioSource AudioSource;
         [FormerlySerializedAs("TextQuestion")] [SerializeField]
         private string[] TextQuestions;
+
+        [SerializeField] private GameObject[] FaTextQuestions;
         [FormerlySerializedAs("VoiceQuestion")] [SerializeField]
         private AudioClip[] VoiceQuestions;
+        
         private int currentIndex;
         [SerializeField]
         private RateAnswerScript RateAnswer;
@@ -39,6 +42,11 @@ namespace DefaultNamespace.Tasks
             if (currentIndex < TextQuestions.Length)
             {
                 QuestionText.text = TextQuestions[currentIndex];
+                foreach (var question in FaTextQuestions)
+                {
+                    question.SetActive(false);
+                }
+                FaTextQuestions[currentIndex].SetActive(true);
 //                AudioSource.clip = VoiceQuestions[currentIndex];
                 AudioSource.Play();
             }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using RTLTMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -24,11 +25,17 @@ public class DrawingManager : MonoBehaviour
 
     [SerializeField] 
     private string[] InstructionTexts;
+    
+    [SerializeField] 
+    private string[] FaInstructionTexts;
 
     [SerializeField] 
     private Text InstructionText;
     [SerializeField] 
     private Text debugText;
+
+    [SerializeField]
+    private RTLTextMeshPro FaInstructionText;
 
     private ScreenShotHandler ScreenShotHandler;
 
@@ -44,7 +51,7 @@ public class DrawingManager : MonoBehaviour
         patternIndex = 0;
         isDrawing = false;
         SetPattern();
-        
+
     }
 
     private void Update()
@@ -61,6 +68,7 @@ public class DrawingManager : MonoBehaviour
         SecondPattern.sprite = null;
         SymmetricPattern.sprite = null;
         InstructionText.text = InstructionTexts[patternIndex];
+        FaInstructionText.text = FaInstructionTexts[patternIndex];
         if (patternIndex > 5)
             SymmetricPattern.sprite = Patterns[patternIndex];
         else
