@@ -25,7 +25,7 @@ public class SensorsReader : MonoBehaviour
     void Start()
     {
         #if !UNITY_EDITOR && UNITY_ANDROID
-            StartRecord = true;
+            StartRecord = false;
         #endif
         if (StartRecord)
         {

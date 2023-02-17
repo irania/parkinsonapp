@@ -43,9 +43,9 @@ public class VoiceEmotionManager : MonoBehaviour
         }
         EmotionButtons[selectedEmotion].Select();
     }
-    public void GoNextSound()
+    public void GoNextSound(bool isAnswered)
     {
-        QuestionareDataHandler.Instance.AddAnswer(selectedEmotion,(int)ConfidenceSlider.value,(int)PleasentSlider.value);
+        QuestionareDataHandler.Instance.AddAnswer(isAnswered?selectedEmotion:-1,(int)ConfidenceSlider.value,(int)PleasentSlider.value);
         ConfidenceSlider.value = 50;
         PleasentSlider.value = 50;
         currentIndex++;
@@ -60,11 +60,15 @@ public class VoiceEmotionManager : MonoBehaviour
 
     IEnumerator  SetAudioSource()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
+        PlayAudio();
+    }
+
+    public void PlayAudio()
+    {
         AudioSource.clip = (AudioClip)audios[currentIndex];
         AudioSource.Play();
     }
-    
 
     public void SetEmotion(int number)
     {

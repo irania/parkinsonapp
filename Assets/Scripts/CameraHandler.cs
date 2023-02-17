@@ -5,7 +5,7 @@ using UnityEngine.Android;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class CameraHandler : MonoBehaviour
+public class CameraHandler : Singleton<CameraHandler>
 {
     WebCamTexture webcamTexture;
     public Text debug;
@@ -25,7 +25,7 @@ public class CameraHandler : MonoBehaviour
 	        // Create a new WebCamTexture & Start the camera
 	        webcamTexture = new WebCamTexture(WebCamTexture.devices[WebCamTexture.devices.Length-1].name);
 	        webcamTexture.Play();
-
+ 
 	        // Assign the WebCamTexture to a Material on a Quad object
 	        GetComponent<Image>().sprite = null;
 	        GetComponent<Image>().material.mainTexture = webcamTexture;
@@ -34,7 +34,7 @@ public class CameraHandler : MonoBehaviour
 
         transform.rotation = rotation;
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector3(size.y, size.x, 1);
-        transform.localScale = new Vector3(1f, -1f, 1);
+        transform.localScale = new Vector3(1f, -1.4f, 1);
 
     }
     private void Update()
@@ -47,20 +47,6 @@ public class CameraHandler : MonoBehaviour
 
     public void TakePicture()
     {
-	    
-	    // Create a new Texture2D with the same dimensions as the WebCamTexture
-	    Texture2D picture = new Texture2D(webcamTexture.width, webcamTexture.height);
-
-	    // Copy the pixels from the WebCamTexture to the new Texture2D
-	    picture.SetPixels(webcamTexture.GetPixels());
-	    picture.Apply();
-
-	    // Encode the Texture2D as a PNG
-        byte[] bytes = picture.EncodeToPNG();
-
-	    // Save the PNG to the device's photo gallery
-	    File.WriteAllBytes(Application.persistentDataPath + "/photo.png", bytes);
-
 	    webcamTexture.Stop();
 	    // Restart the camera
 	    webcamTexture.Play();

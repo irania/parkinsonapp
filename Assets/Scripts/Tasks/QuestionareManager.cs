@@ -48,7 +48,7 @@ namespace DefaultNamespace.Tasks
                 }
                 FaTextQuestions[currentIndex].SetActive(true);
 //                AudioSource.clip = VoiceQuestions[currentIndex];
-                AudioSource.Play();
+                //AudioSource.Play();
             }
 
             RateAnswer.SetValue(2);

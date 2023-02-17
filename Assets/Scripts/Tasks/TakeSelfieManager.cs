@@ -47,6 +47,7 @@ public class TakeSelfieManager : MonoBehaviour
         string fileName = "emo" + emotionIndex + "-" + DateTime.Now.Ticks+".png";
         StartCoroutine(ScreenShotHandler.TakeScreenShotAndSave(fileName));
         yield return new WaitForSeconds(2);
+        CameraHandler.Instance.TakePicture();
         SendDataManager.Instance.SendImageFile(fileName);
         if (emotionIndex >= emotionsVideoFiles.Count)
             GoHome();

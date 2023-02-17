@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class DrawingManager : MonoBehaviour
 {
     [SerializeField] 
+    private GameObject InstructionCanvas;
+    [SerializeField] 
     private GameObject DrawingCanvas;
     [SerializeField] 
     private GameObject PatternCanvas;
@@ -46,12 +48,13 @@ public class DrawingManager : MonoBehaviour
     void Awake()
     {
         ScreenShotHandler = gameObject.GetComponent<ScreenShotHandler>();
-        PatternCanvas.SetActive(true);
+        PatternCanvas.SetActive(false);
         DrawingCanvas.SetActive(false);
+        InstructionCanvas.SetActive(true);
         patternIndex = 0;
         isDrawing = false;
         SetPattern();
-
+        
     }
 
     private void Update()
