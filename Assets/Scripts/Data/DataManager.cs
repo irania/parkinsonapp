@@ -17,11 +17,13 @@ namespace DefaultNamespace
         private const string AppId = "9A6E5919-7EED-4A2E-8887-C34E02949274";
         private const string PlayerPrefabKey = "Users";
         public bool isFarsi=true;
+        public bool[] LevelsDone; 
 
         private void Start()
         {
             isFarsi = true;
             Users = LoadFromFile();
+            
             if (Users.Count > 0)
                 CurrentUser = Users.Count - 1;
         }
