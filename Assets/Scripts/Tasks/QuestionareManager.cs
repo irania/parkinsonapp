@@ -12,8 +12,6 @@ namespace DefaultNamespace.Tasks
     {
         [SerializeField] 
         private Text QuestionText;
-        [SerializeField] 
-        private AudioSource AudioSource;
         [FormerlySerializedAs("TextQuestion")] [SerializeField]
         private string[] TextQuestions;
 
@@ -51,7 +49,7 @@ namespace DefaultNamespace.Tasks
                 //AudioSource.Play();
             }
 
-            RateAnswer.SetValue(2);
+            RateAnswer.SetNull();
         }
 
         public void NextButtonClick()

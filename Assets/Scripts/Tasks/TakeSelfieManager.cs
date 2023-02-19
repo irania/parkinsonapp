@@ -16,7 +16,7 @@ public class TakeSelfieManager : MonoBehaviour
     [SerializeField]
     private VideoPlayer EmotionPlayer;
     private int emotionIndex;
-    private string folderPath = "videos";
+    private string folderPath = "videos/avatar";
     private ScreenShotHandler ScreenShotHandler;
     
     private void Start()

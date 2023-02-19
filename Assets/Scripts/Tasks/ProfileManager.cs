@@ -3,6 +3,7 @@ using System;
 using DefaultNamespace;
 using Entities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ProfileManager: MonoBehaviour
@@ -28,6 +29,13 @@ public class ProfileManager: MonoBehaviour
     [SerializeField]
     private Toggle LungDisease;
 
+    private void Update()
+    {
+        if (Keyboard.current.escapeKey.isPressed)
+        {
+            Application.LoadLevel(0);
+        }
+    }
     public void OnSubmit()
     {
         var profile = new Profile()
@@ -49,4 +57,5 @@ public class ProfileManager: MonoBehaviour
         SendDataManager.Instance.SendJsonData(gd);
         Application.LoadLevel(0);
     }
+    
 }

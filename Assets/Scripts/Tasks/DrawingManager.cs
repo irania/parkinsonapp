@@ -39,6 +39,11 @@ public class DrawingManager : MonoBehaviour
     [SerializeField]
     private RTLTextMeshPro FaInstructionText;
 
+    [SerializeField] private Vector3[] StartPositions;
+    [SerializeField] private GameObject StartPoint;
+    [SerializeField] private GameObject Pencil;
+    [SerializeField] private Button NextButton;
+
     private ScreenShotHandler ScreenShotHandler;
 
     private int patternIndex;
@@ -72,7 +77,9 @@ public class DrawingManager : MonoBehaviour
         SymmetricPattern.sprite = null;
         InstructionText.text = InstructionTexts[patternIndex];
         FaInstructionText.text = FaInstructionTexts[patternIndex];
-        if (patternIndex > 5)
+        StartPoint.transform.localPosition = StartPositions[patternIndex];
+        Pencil.transform.localPosition = StartPositions[patternIndex]+new Vector3(-10,10,0);
+        if (patternIndex > 8)
             SymmetricPattern.sprite = Patterns[patternIndex];
         else
         {
@@ -97,6 +104,7 @@ public class DrawingManager : MonoBehaviour
     IEnumerator GoNext()
     {
         var fileName = "dr" + patternIndex +"-"+DateTime.Now.Ticks+".png";
+        NextButton.interactable = false;
         StartCoroutine(ScreenShotHandler.TakeScreenShotAndSave(fileName));
         yield return new WaitForSeconds(2);
         SendDataManager.Instance.SendImageFile(fileName);
@@ -112,6 +120,7 @@ public class DrawingManager : MonoBehaviour
             DrawingCanvas.SetActive(false);
             PatternCanvas.SetActive(true);
         }
+        NextButton.interactable = true;
 
     }
 

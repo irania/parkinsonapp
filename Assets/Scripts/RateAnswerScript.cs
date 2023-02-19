@@ -18,7 +18,7 @@ public class RateAnswerScript : MonoBehaviour
 
     private void Start()
     {
-        SetValue(2);
+        SetNull();
     }
 
     public void OnClick(int number)
@@ -34,6 +34,15 @@ public class RateAnswerScript : MonoBehaviour
             Circles[i].sprite = EmptySprite;
         }
         Circles[number].sprite = FillSprite;
+    }
+
+    public void SetNull()
+    {
+        Value = -1;
+        for(int i = 0; i < Circles.Count; i++)
+        {
+            Circles[i].sprite = EmptySprite;
+        }
     }
     
 }
