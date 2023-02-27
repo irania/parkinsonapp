@@ -34,7 +34,7 @@ public class CameraHandler : Singleton<CameraHandler>
 
         transform.rotation = rotation;
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector3(size.y, size.x, 1);
-        transform.localScale = new Vector3(1f, -1.4f, 1);
+        transform.localScale = (Screen.orientation == ScreenOrientation.Portrait)?new Vector3(1f, -1.4f, 1): new Vector3(-1f, 1.4f, 1);
 
     }
     private void Update()

@@ -13,7 +13,7 @@ public class ProgressBar : MonoBehaviour
     private IList<GameObject> Circles;
 
     [SerializeField] 
-    private Sprite FillCircle;
+    private Color FillColor;
 
     [SerializeField] 
     private int StepsNumber;
@@ -50,7 +50,7 @@ public class ProgressBar : MonoBehaviour
 
     public void ActiveCircle()
     {
-        Circles[index].GetComponent<SpriteRenderer>().sprite = FillCircle;
+        Circles[index].GetComponent<SpriteRenderer>().color=FillColor;
     }
     
 }

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class ProfileManager: MonoBehaviour
 {
+    private const int GameId = 1;
     [SerializeField]
     private Toggle GenderMan;
 
@@ -55,6 +56,7 @@ public class ProfileManager: MonoBehaviour
             Data = JsonUtility.ToJson(profile)
         };
         SendDataManager.Instance.SendJsonData(gd);
+        DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
         Application.LoadLevel(0);
     }
     

@@ -22,6 +22,7 @@ public class User
     public string AppId;
 
     public bool IsUploaded;
-    
+
+    public bool[] LevelsDone;
 }
 

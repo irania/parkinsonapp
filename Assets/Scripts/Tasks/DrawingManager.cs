@@ -10,16 +10,9 @@ using UnityEngine.UI;
 
 public class DrawingManager : MonoBehaviour
 {
-    [SerializeField] 
-    private GameObject InstructionCanvas;
-    [SerializeField] 
-    private GameObject DrawingCanvas;
-    [SerializeField] 
-    private GameObject PatternCanvas;
-    [SerializeField] 
-    private SpriteRenderer FirstPattern;
-    [SerializeField] 
-    private SpriteRenderer SecondPattern;
+    private const int GameId = 0;
+    [FormerlySerializedAs("FirstPattern")] [SerializeField] 
+    private SpriteRenderer Pattern;
     [SerializeField] 
     private SpriteRenderer SymmetricPattern;
     [SerializeField]
@@ -38,10 +31,6 @@ public class DrawingManager : MonoBehaviour
 
     [SerializeField]
     private RTLTextMeshPro FaInstructionText;
-
-    [SerializeField] private Vector3[] StartPositions;
-    [SerializeField] private GameObject StartPoint;
-    [SerializeField] private GameObject Pencil;
     [SerializeField] private Button NextButton;
 
     private ScreenShotHandler ScreenShotHandler;
@@ -53,9 +42,6 @@ public class DrawingManager : MonoBehaviour
     void Awake()
     {
         ScreenShotHandler = gameObject.GetComponent<ScreenShotHandler>();
-        PatternCanvas.SetActive(false);
-        DrawingCanvas.SetActive(false);
-        InstructionCanvas.SetActive(true);
         patternIndex = 0;
         isDrawing = false;
         SetPattern();
@@ -72,33 +58,15 @@ public class DrawingManager : MonoBehaviour
 
     private void SetPattern()
     {
-        FirstPattern.sprite = Patterns[patternIndex];
-        SecondPattern.sprite = null;
-        SymmetricPattern.sprite = null;
         InstructionText.text = InstructionTexts[patternIndex];
         FaInstructionText.text = FaInstructionTexts[patternIndex];
-        StartPoint.transform.localPosition = StartPositions[patternIndex];
-        Pencil.transform.localPosition = StartPositions[patternIndex]+new Vector3(-10,10,0);
-        if (patternIndex > 8)
-            SymmetricPattern.sprite = Patterns[patternIndex];
-        else
-        {
-            SecondPattern.sprite = Patterns[patternIndex];
-        }
-    }
-    public void LetsGoButton()
-    {
-        DrawingCanvas.SetActive(true);
-        PatternCanvas.SetActive(false);
-        isDrawing = true;
+        Pattern.sprite = Patterns[patternIndex];
     }
 
     public void DoneButton()
     {
         patternIndex++;
         StartCoroutine(GoNext());
-
-
     }
 
     IEnumerator GoNext()
@@ -110,6 +78,7 @@ public class DrawingManager : MonoBehaviour
         SendDataManager.Instance.SendImageFile(fileName);
         if (patternIndex== Patterns.Count)
         {
+            DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
             Application.LoadLevel (0);
         }
         else
@@ -117,12 +86,13 @@ public class DrawingManager : MonoBehaviour
             isDrawing = false;
             SetPattern();
             CleanPage();
-            DrawingCanvas.SetActive(false);
-            PatternCanvas.SetActive(true);
+
         }
         NextButton.interactable = true;
 
     }
+
+    
 
     public void CleanPage()
     {

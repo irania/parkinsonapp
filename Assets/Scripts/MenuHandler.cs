@@ -10,6 +10,22 @@ public class MenuHandler : MonoBehaviour
 {
     [SerializeField] 
     private Text UserNameText;
+    [SerializeField]
+    private List<GameObject> ButtonsTick;
+
+    private void Start()
+    {
+        SetTicks();
+    }
+
+    public void SetTicks()
+    {
+        for (int i=0;i< ButtonsTick.Count;i++)
+        {
+            ButtonsTick[i].SetActive(DataManager.Instance.GetCurrentUser().LevelsDone[i]);
+        }
+    }
+
     private void Update()
     {
         //todo it has bug

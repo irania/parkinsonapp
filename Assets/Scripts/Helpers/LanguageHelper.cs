@@ -12,7 +12,6 @@ public class LanguageHelper : MonoBehaviour
     void Start()
     {
         bool faActive = DataManager.Instance.isFarsi;
-        Debug.Log(faActive);
         foreach (var faObject in FaObjects)
         {
             faObject.SetActive(faActive);

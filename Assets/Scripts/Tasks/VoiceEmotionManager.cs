@@ -8,8 +8,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class VoiceEmotionManager : MonoBehaviour
-
 {
+    private const int GameId = 2;
     [SerializeField]
     private AudioSource AudioSource;
 
@@ -53,6 +53,7 @@ public class VoiceEmotionManager : MonoBehaviour
             StartCoroutine(SetAudioSource());
         else
         {
+            DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
             QuestionareDataHandler.Instance.SendData();
             Application.LoadLevel(0);
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -11,6 +12,7 @@ using Object = UnityEngine.Object;
 
 public class TakeSelfieManager : MonoBehaviour
 {
+    private const int GameId = 3;
     [FormerlySerializedAs("EmotionsVideoFiles")] [SerializeField] 
     private List<Object> emotionsVideoFiles;
     [SerializeField]
@@ -50,7 +52,10 @@ public class TakeSelfieManager : MonoBehaviour
         CameraHandler.Instance.TakePicture();
         SendDataManager.Instance.SendImageFile(fileName);
         if (emotionIndex >= emotionsVideoFiles.Count)
+        {
+            DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
             GoHome();
+        }
         else
         {
             StartCoroutine(SetVideo());

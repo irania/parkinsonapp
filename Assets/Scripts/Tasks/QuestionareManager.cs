@@ -10,6 +10,7 @@ namespace DefaultNamespace.Tasks
 {
     public class QuestionareManager: MonoBehaviour
     {
+        private const int GameId = 4;
         [SerializeField] 
         private Text QuestionText;
         [FormerlySerializedAs("TextQuestion")] [SerializeField]
@@ -45,8 +46,6 @@ namespace DefaultNamespace.Tasks
                     question.SetActive(false);
                 }
                 FaTextQuestions[currentIndex].SetActive(true);
-//                AudioSource.clip = VoiceQuestions[currentIndex];
-                //AudioSource.Play();
             }
 
             RateAnswer.SetNull();
@@ -62,6 +61,7 @@ namespace DefaultNamespace.Tasks
             }
             else
             {
+                DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
                 QuestionareDataHandler.Instance.SendData();
                 Application.LoadLevel(0);
             }

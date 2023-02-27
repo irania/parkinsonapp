@@ -1,15 +1,10 @@
 using DefaultNamespace;
+using RTLTMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LanguageToggle : MonoBehaviour
 {
-    [SerializeField]
-    private Sprite FaImage;
-    [SerializeField]
-    private Sprite EnImage;
-
-    [SerializeField] private Image ToggleImage;
 
     private void Start()
     {
@@ -23,13 +18,11 @@ public class LanguageToggle : MonoBehaviour
 
     private void SetFarsi()
     {
-        ToggleImage.sprite = FaImage;
         DataManager.Instance.isFarsi = true;
     }
 
     private void SetEnglish()
     {
-        ToggleImage.sprite = EnImage;
         DataManager.Instance.isFarsi = false;
     }
 
@@ -41,5 +34,7 @@ public class LanguageToggle : MonoBehaviour
         {
             SetFarsi();
         }
+        
+        
     }
 }
