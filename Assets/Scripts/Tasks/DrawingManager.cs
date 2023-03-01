@@ -26,8 +26,8 @@ public class DrawingManager : MonoBehaviour
 
     [SerializeField] 
     private Text InstructionText;
-    [SerializeField] 
-    private Text debugText;
+
+    [SerializeField] private GameObject EnvCanvas;
 
     [SerializeField]
     private RTLTextMeshPro FaInstructionText;
@@ -63,6 +63,35 @@ public class DrawingManager : MonoBehaviour
         Pattern.sprite = Patterns[patternIndex];
     }
 
+    public void NextButtonClick()
+    {
+        patternIndex++;
+        if (patternIndex== Patterns.Count)
+        {
+            DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
+            Application.LoadLevel (0);
+        }
+        else
+        {
+            CleanPage();
+            SetPattern();
+        }
+    }
+    public void PrevButtonClick()
+    {
+        
+        if (patternIndex>0)
+        {
+            patternIndex--;
+            CleanPage();
+            SetPattern();
+        }
+        else
+        {
+            Application.LoadLevel (0);
+        }
+    }
+
     public void DoneButton()
     {
         patternIndex++;
@@ -73,8 +102,10 @@ public class DrawingManager : MonoBehaviour
     {
         var fileName = "dr" + patternIndex +"-"+DateTime.Now.Ticks+".png";
         NextButton.interactable = false;
+        EnvCanvas.SetActive(false);
         StartCoroutine(ScreenShotHandler.TakeScreenShotAndSave(fileName));
         yield return new WaitForSeconds(2);
+        EnvCanvas.SetActive(true);
         SendDataManager.Instance.SendImageFile(fileName);
         if (patternIndex== Patterns.Count)
         {
