@@ -12,7 +12,7 @@ using Object = UnityEngine.Object;
 
 public class TakeSelfieManager : MonoBehaviour
 {
-    private const int GameId = 3;
+    private const int GameId = 1;
     [FormerlySerializedAs("EmotionsVideoFiles")] [SerializeField] 
     private List<Object> emotionsVideoFiles;
     [SerializeField]
@@ -44,6 +44,27 @@ public class TakeSelfieManager : MonoBehaviour
         StartCoroutine(SendScreenShotAndNext());
     }
 
+    public void BackButtonClick()
+    {
+        if(emotionIndex<=0)
+            GoHome();
+        else
+        {
+            emotionIndex--;
+            StartCoroutine(SetVideo());
+        }
+    }
+    public void NextButtonClick()
+    {
+        emotionIndex++;
+        if(emotionIndex>= emotionsVideoFiles.Count)
+            GoHome();
+        else
+        {
+            
+            StartCoroutine(SetVideo());
+        }
+    }
     private IEnumerator SendScreenShotAndNext()
     {
         string fileName = "emo" + emotionIndex + "-" + DateTime.Now.Ticks+".png";
@@ -75,4 +96,6 @@ public class TakeSelfieManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         EmotionPlayer.Play();
     }
+    
+    
 }

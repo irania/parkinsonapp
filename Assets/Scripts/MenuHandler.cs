@@ -30,9 +30,9 @@ public class MenuHandler : MonoBehaviour
     {
         //todo it has bug
         if (DataManager.Instance.GetCurrentUser() is null)
-            UserNameText.text = "Hi! Please create an account";
+            UserNameText.text = "Please create an account";
         else
-            UserNameText.text = "Hi! " + DataManager.Instance.GetCurrentUser().UserName;
+            UserNameText.text = DataManager.Instance.GetCurrentUser().UserName;
     }
 
     public void LoadHandwritingScene()

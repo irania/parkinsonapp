@@ -56,6 +56,7 @@ public class UserPanelHandler : MonoBehaviour
         UsersDropDown.value = DataManager.Instance.CurrentUser;
         SelectUser(DataManager.Instance.CurrentUser);
         UserNameField.text = "";
+        Application.LoadLevel("ProfileScene");
         gameObject.SetActive(false);
 
     }

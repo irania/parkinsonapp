@@ -11,5 +11,7 @@ public class Profile
     public bool LungDisease;
     public string Drugs;
     public int LastMedicine;
-    
+    public string Name;
+    public bool RightHand;
+
 }

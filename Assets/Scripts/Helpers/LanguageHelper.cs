@@ -9,7 +9,7 @@ public class LanguageHelper : MonoBehaviour
 
     public List<GameObject> EnObjects;
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
         bool faActive = DataManager.Instance.isFarsi;
         foreach (var faObject in FaObjects)

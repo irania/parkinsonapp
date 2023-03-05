@@ -1,9 +1,5 @@
-using System;
-using System.CodeDom.Compiler;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class ProgressBar : MonoBehaviour
 {
@@ -47,10 +43,27 @@ public class ProgressBar : MonoBehaviour
         if (index < Circles.Count)
             ActiveCircle();
     }
+    
+    public void GoPrev()
+    {
+        if (index > 0)
+        {
+            index--;
+            ActiveCircle();
+        }
+    }
 
     public void ActiveCircle()
     {
-        Circles[index].GetComponent<SpriteRenderer>().color=FillColor;
+        for (int i=0; i < Circles.Count;i++)
+        {
+            if(i<=index)
+                Circles[i].GetComponent<SpriteRenderer>().color=FillColor;
+            else
+            {
+                Circles[i].GetComponent<SpriteRenderer>().color=Color.grey;
+            }
+        }
     }
     
 }

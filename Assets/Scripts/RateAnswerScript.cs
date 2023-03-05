@@ -2,22 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 public class RateAnswerScript : MonoBehaviour
 {
     public int Value=1;
-    [SerializeField]
-    private Sprite FillSprite;
-    [SerializeField]
-    private Sprite EmptySprite;
 
-    [SerializeField] 
-    private List<Image> Circles;
+    [FormerlySerializedAs("Circles")] [SerializeField] 
+    private List<Image> Buttons;
+
+    [SerializeField] private Color _color;
 
     private void Start()
-    {
+    {   
         SetNull();
     }
 
@@ -29,19 +28,20 @@ public class RateAnswerScript : MonoBehaviour
     public void SetValue(int number)
     {
         Value = number;
-        for(int i = 0; i < Circles.Count; i++)
+        for(int i = 0; i < Buttons.Count; i++)
         {
-            Circles[i].sprite = EmptySprite;
+            Buttons[i].color = Color.white;
         }
-        Circles[number].sprite = FillSprite;
+
+        Buttons[number].color = _color;
     }
 
     public void SetNull()
     {
         Value = -1;
-        for(int i = 0; i < Circles.Count; i++)
+        for(int i = 0; i < Buttons.Count; i++)
         {
-            Circles[i].sprite = EmptySprite;
+            Buttons[i].color = Color.white;
         }
     }
     

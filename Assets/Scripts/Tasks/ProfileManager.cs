@@ -8,10 +8,13 @@ using UnityEngine.UI;
 
 public class ProfileManager: MonoBehaviour
 {
-    private const int GameId = 1;
+    private const int GameId = 5;
     [SerializeField]
     private Toggle GenderMan;
-
+    
+    [SerializeField]
+    private InputField Name;
+    
     [SerializeField]
     private InputField Age;
     
@@ -29,6 +32,10 @@ public class ProfileManager: MonoBehaviour
     
     [SerializeField]
     private Toggle LungDisease;
+    
+    [SerializeField]
+    private Toggle RightHand;
+    
 
     private void Update()
     {
@@ -39,16 +46,19 @@ public class ProfileManager: MonoBehaviour
     }
     public void OnSubmit()
     {
+        
         var profile = new Profile()
         {
-            Age = Int32.Parse(Age.text),
+            Name = Name.text,
+            Age = Int32.TryParse(Age.text, out int result) ? result : 0,
             IsMan = GenderMan.isOn,
             Drugs = Drugs.text,
             Id = DataManager.Instance.GetCurrentUser().Id,
-            LastMedicine = Int32.Parse(LastDrug.text),
+            LastMedicine = Int32.TryParse(LastDrug.text, out int resultDrug) ? resultDrug : 0,
             LungDisease = LungDisease.isOn,
             ParkFamily = ParkFamily.isOn,
-            YearDisease = Int32.Parse(YearDisease.text)
+            YearDisease = Int32.TryParse(LastDrug.text, out int resultYear) ? resultYear : 0,
+            RightHand = RightHand.isOn
         };
         GameData gd = new GameData()
         {
@@ -57,6 +67,11 @@ public class ProfileManager: MonoBehaviour
         };
         SendDataManager.Instance.SendJsonData(gd);
         DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
+        Application.LoadLevel(0);
+    }
+
+    public void BackButton()
+    {
         Application.LoadLevel(0);
     }
     

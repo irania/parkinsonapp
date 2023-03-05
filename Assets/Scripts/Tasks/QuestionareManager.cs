@@ -10,7 +10,7 @@ namespace DefaultNamespace.Tasks
 {
     public class QuestionareManager: MonoBehaviour
     {
-        private const int GameId = 4;
+        private const int GameId = 3;
         [SerializeField] 
         private Text QuestionText;
         [FormerlySerializedAs("TextQuestion")] [SerializeField]
@@ -63,6 +63,19 @@ namespace DefaultNamespace.Tasks
             {
                 DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
                 QuestionareDataHandler.Instance.SendData();
+                Application.LoadLevel(0);
+            }
+        }
+
+        public void PrevButtonClick()
+        {
+            if (currentIndex > 0)
+            {
+                currentIndex--;
+                SetQuestion();
+            }
+            else
+            {
                 Application.LoadLevel(0);
             }
         }
