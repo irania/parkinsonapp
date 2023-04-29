@@ -84,7 +84,7 @@ public class TakeSelfieManager : MonoBehaviour
         yield return new WaitForSeconds(1);
     }
 
-    private void GoHome()
+    public void GoHome()
     {
         Application.LoadLevel(0);
     }

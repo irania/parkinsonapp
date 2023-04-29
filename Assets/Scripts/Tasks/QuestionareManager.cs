@@ -33,7 +33,7 @@ namespace DefaultNamespace.Tasks
         {
             if (Keyboard.current.escapeKey.isPressed)
             {
-                Application.LoadLevel(0);
+                GoHome();
             }
         }
         private void SetQuestion()
@@ -63,7 +63,7 @@ namespace DefaultNamespace.Tasks
             {
                 DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
                 QuestionareDataHandler.Instance.SendData();
-                Application.LoadLevel(0);
+                GoHome();
             }
         }
 
@@ -76,8 +76,13 @@ namespace DefaultNamespace.Tasks
             }
             else
             {
-                Application.LoadLevel(0);
+                GoHome();
             }
+        }
+
+        public void GoHome()
+        {
+            Application.LoadLevel(0);
         }
         
     }

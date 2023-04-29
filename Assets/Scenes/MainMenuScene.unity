@@ -323,7 +323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3928160460296813004, guid: e65d4676c757fb54ea643450183a5611, type: 3}
       propertyPath: m_Text
-      value: Take Selfie
+      value: Selfie camera
       objectReference: {fileID: 0}
     - target: {fileID: 4774335060236409709, guid: e65d4676c757fb54ea643450183a5611, type: 3}
       propertyPath: m_RootOrder
@@ -453,8 +453,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11.40773, y: -3.9153137}
-  m_SizeDelta: {x: 133.28998, y: 32.33}
+  m_AnchoredPosition: {x: -11.3, y: -3.4199991}
+  m_SizeDelta: {x: 133.29, y: 30.588}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &335096382
 MonoBehaviour:
@@ -489,7 +489,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Atefeh Irani
+  m_Text: '-'
 --- !u!222 &335096383
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1343,7 +1343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3928160460296813004, guid: e65d4676c757fb54ea643450183a5611, type: 3}
       propertyPath: m_Text
-      value: Questionare
+      value: Questionnaire
       objectReference: {fileID: 0}
     - target: {fileID: 4774335060236409709, guid: e65d4676c757fb54ea643450183a5611, type: 3}
       propertyPath: m_RootOrder

@@ -273,7 +273,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 
 --- !u!222 &70877140
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -504,7 +504,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 
 --- !u!222 &97262817
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1082,7 +1082,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 
 --- !u!222 &360436945
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2035,8 +2035,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 543909405666337994, guid: d733f87afd943b142963a527c81a9f65, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 719
+      objectReference: {fileID: 0}
+    - target: {fileID: 543909405666337994, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -200
+      value: -151.44
       objectReference: {fileID: 0}
     - target: {fileID: 543909405666337994, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2164,7 +2168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6660325227825045490, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_Text
-      value: Last drug taken (hours)
+      value: Last drug taken (hr)
       objectReference: {fileID: 0}
     - target: {fileID: 6660325227825045490, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_Color.b
@@ -2411,7 +2415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5302412825886899272, guid: 9ae11ddb08ea0394d858e4d27fc84c77, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 103
+      value: 73
       objectReference: {fileID: 0}
     - target: {fileID: 5302412825886899272, guid: 9ae11ddb08ea0394d858e4d27fc84c77, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2974,7 +2978,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6660325227825045490, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_Text
-      value: Drugs
+      value: Medication
       objectReference: {fileID: 0}
     - target: {fileID: 6660325227825045490, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_Color.b
@@ -3378,7 +3382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6660325227825045490, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_Text
-      value: Family with Parkinson's disease
+      value: Family history
       objectReference: {fileID: 0}
     - target: {fileID: 6660325227825045490, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_Color.b
@@ -4596,7 +4600,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: L-dopa
+  m_Text: 
 --- !u!222 &1561846525
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4902,7 +4906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6660325227825045490, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_Text
-      value: 'Writing hand: right'
+      value: Right handed
       objectReference: {fileID: 0}
     - target: {fileID: 6660325227825045490, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_Color.b
@@ -4930,7 +4934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8731261712801153361, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_text
-      value: "\uFEA9\uFEB3\uFE96 \uFEAD\uFE8D\uFEB3\uFE96"
+      value: "\uFEAD\uFE8D\uFEB3\uFE96 \uFEA9\uFEB3\uFE96"
       objectReference: {fileID: 0}
     - target: {fileID: 8731261712801153361, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_fontSize
@@ -4938,7 +4942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8731261712801153361, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: originalText
-      value: "\u062F\u0633\u062A \u0631\u0627\u0633\u062A"
+      value: "\u0631\u0627\u0633\u062A \u062F\u0633\u062A"
       objectReference: {fileID: 0}
     - target: {fileID: 8731261712801153361, guid: d733f87afd943b142963a527c81a9f65, type: 3}
       propertyPath: m_fontColor.b
@@ -5016,7 +5020,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 102, y: -645.03}
+  m_AnchoredPosition: {x: 102, y: -657}
   m_SizeDelta: {x: 130, y: 76.06494}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1649122621

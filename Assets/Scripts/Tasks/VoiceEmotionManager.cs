@@ -34,14 +34,16 @@ public class VoiceEmotionManager : MonoBehaviour
         audios.AddRange(Resources.LoadAll(folderPath,typeof(AudioClip)));
         currentIndex = 0;
         StartCoroutine(SetAudioSource());
+        selectedEmotion = 0;
     }
     private void Update()
     {
         if (Keyboard.current.escapeKey.isPressed)
         {
-            Application.LoadLevel(0);
+            GoHome();
         }
-        EmotionButtons[selectedEmotion].Select();
+        if(selectedEmotion>=0)
+            EmotionButtons[selectedEmotion].Select();
     }
     public void GoNextSound(bool isAnswered)
     {
@@ -49,19 +51,22 @@ public class VoiceEmotionManager : MonoBehaviour
         ConfidenceSlider.value = 50;
         PleasentSlider.value = 50;
         currentIndex++;
+        selectedEmotion = 0;
         if (audios.Count > currentIndex)
             StartCoroutine(SetAudioSource());
         else
         {
             DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
             QuestionareDataHandler.Instance.SendData();
-            Application.LoadLevel(0);
+            GoHome();
         }
+
+        
     }
 
     IEnumerator  SetAudioSource()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         PlayAudio();
     }
 
@@ -75,4 +80,10 @@ public class VoiceEmotionManager : MonoBehaviour
     {
         selectedEmotion = number;
     }
+
+    public void GoHome()
+    {
+        Application.LoadLevel(0);
+    }
+    
 }

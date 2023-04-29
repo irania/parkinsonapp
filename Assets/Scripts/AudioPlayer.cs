@@ -10,7 +10,7 @@ public class AudioPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioSource = GameObject.FindObjectOfType<AudioSource>();
+        AudioSource = FindObjectOfType<AudioSource>();
     }
 
     // Update is called once per frame

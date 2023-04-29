@@ -11,15 +11,18 @@ public class LanguageHelper : MonoBehaviour
     // Start is called before the first frame update
     void Update()
     {
-        bool faActive = DataManager.Instance.isFarsi;
-        foreach (var faObject in FaObjects)
+        try
         {
-            faObject.SetActive(faActive);
-        }
+            bool faActive = DataManager.Instance.isFarsi;
+            foreach (var faObject in FaObjects)
+            {
+                faObject.SetActive(faActive);
+            }
 
-        foreach (var enObject in EnObjects)
-        {
-            enObject.SetActive(!faActive);
-        }
+            foreach (var enObject in EnObjects)
+            {
+                enObject.SetActive(!faActive);
+            }
+        }catch{}
     }
 }

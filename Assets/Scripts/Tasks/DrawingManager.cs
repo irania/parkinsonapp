@@ -14,6 +14,8 @@ public class DrawingManager : MonoBehaviour
     [FormerlySerializedAs("FirstPattern")] [SerializeField] 
     private SpriteRenderer Pattern;
     [SerializeField] 
+    private GameObject RightPattern;
+    [SerializeField] 
     private SpriteRenderer SymmetricPattern;
     [SerializeField]
     private List<Sprite> Patterns;
@@ -52,7 +54,7 @@ public class DrawingManager : MonoBehaviour
     {
         if (Keyboard.current.escapeKey.isPressed)
         {
-            Application.LoadLevel(0);
+            GoHome();
         }
     }
 
@@ -61,6 +63,11 @@ public class DrawingManager : MonoBehaviour
         InstructionText.text = InstructionTexts[patternIndex];
         FaInstructionText.text = FaInstructionTexts[patternIndex];
         Pattern.sprite = Patterns[patternIndex];
+        if (patternIndex >= Patterns.Count - 2)
+        {
+            RightPattern.SetActive(true);
+            Pattern.enabled = false;
+        }
     }
 
     public void NextButtonClick()
@@ -69,7 +76,7 @@ public class DrawingManager : MonoBehaviour
         if (patternIndex== Patterns.Count)
         {
             DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
-            Application.LoadLevel (0);
+            GoHome();
         }
         else
         {
@@ -88,7 +95,7 @@ public class DrawingManager : MonoBehaviour
         }
         else
         {
-            Application.LoadLevel (0);
+            GoHome();
         }
     }
 
@@ -100,17 +107,20 @@ public class DrawingManager : MonoBehaviour
 
     IEnumerator GoNext()
     {
-        var fileName = "dr" + patternIndex +"-"+DateTime.Now.Ticks+".png";
-        NextButton.interactable = false;
+        
+        var fileName = "dr" + patternIndex + "-" + DateTime.Now.Ticks + ".png";
         EnvCanvas.SetActive(false);
         StartCoroutine(ScreenShotHandler.TakeScreenShotAndSave(fileName));
         yield return new WaitForSeconds(2);
-        EnvCanvas.SetActive(true);
-        SendDataManager.Instance.SendImageFile(fileName);
+        try {
+            EnvCanvas.SetActive(true); 
+            SendDataManager.Instance.SendImageFile(fileName);
+        }catch{}
+
         if (patternIndex== Patterns.Count)
         {
             DataManager.Instance.GetCurrentUser().LevelsDone[GameId] = true;
-            Application.LoadLevel (0);
+            GoHome();
         }
         else
         {
@@ -123,8 +133,6 @@ public class DrawingManager : MonoBehaviour
 
     }
 
-    
-
     public void CleanPage()
     {
         var lines = GameObject.FindGameObjectsWithTag("Line");
@@ -134,4 +142,8 @@ public class DrawingManager : MonoBehaviour
         }
     }
     
+    public void GoHome()
+    {
+        Application.LoadLevel(0);
+    }
 }
