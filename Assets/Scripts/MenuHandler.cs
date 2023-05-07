@@ -64,6 +64,11 @@ public class MenuHandler : MonoBehaviour
     {
         Application.LoadLevel ("PhysicalScene");
     }
+    
+    public void LoadVoiceGame()
+    {
+        Application.LoadLevel ("MainMenu");
+    }
     public void OpenUserPanel()
     {
         

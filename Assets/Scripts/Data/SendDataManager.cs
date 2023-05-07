@@ -1,0 +1,175 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using DefaultNamespace;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+/// <summary>
+/// Send Data to server and save data if server was unavailable
+/// </summary>
+public class SendDataManager : Singleton<SendDataManager>
+{
+    /// <summary>
+    /// Server URL
+    /// </summary>
+    public string Url = "http://gamesdata.cognitivetests.ir/";
+    public const string AppId = "9A6E5919-7EED-4A2E-8887-C34E02949285";
+    public Text debugText;
+    void Start()
+    {
+        #if UNITY_ANDROID
+            //Directory.CreateDirectory(Application.dataPath + "/");
+
+            //every 120 second send files to server
+            //InvokeRepeating("SendSavedFilesAndDelete", 0, 120.0f);
+        #endif
+    }
+    
+    public void SendJsonUser(string json,Func<string,int> afterCall=null)
+    {
+        StartCoroutine(PostRequestCoroutine(Url+"users",json,afterCall));
+    }
+    
+    public void SendJsonData(GameData gameData)
+    {
+        //scene name
+        gameData.SceneName = SceneManager.GetActiveScene().name;
+
+        //time
+        gameData.Time = DateTime.Now.ToString();
+
+        //user name
+        gameData.UserID = DataManager.Instance.GetCurrentUser().Id;
+        string fileName = gameData.DataName+"_"+Settings.Instance.level+"_"+DateTime.Now.Ticks+".txt";
+        Log(gameData.Data);    
+        StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + gameData.UserID,
+            Encoding.ASCII.GetBytes(gameData.Data),
+            fileName,
+            gameData.SceneName,
+            gameData.DataName,
+            "application/octet-stream"));
+            
+    }
+    public void SendImageFile(string fileName)
+    {
+        StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + DataManager.Instance.GetCurrentUser().Id,
+            File.ReadAllBytes(Application.persistentDataPath+"/"+fileName),
+            fileName,
+            SceneManager.GetActiveScene().name,
+            "Image",
+            "image/png"));
+    }
+    /// <summary>
+    /// Send Json to server
+    /// </summary>
+    /// <param name="json">Json format of game results object</param>
+    private void SendJson(string url, string json,Func<string,int> afterCall=null)
+    {
+        StartCoroutine(PostRequestCoroutine(url,json,afterCall));
+    }
+
+    /// <summary>
+    /// Post request coroutine
+    /// </summary>
+    /// <param name="url">URL address</param>
+    /// <param name="json">Json format of game results object</param>
+    private IEnumerator PostRequestCoroutine(string url, string json,Func<string,int> afterCall)
+    {
+        var jsonBinary = Encoding.UTF8.GetBytes(json);
+
+        DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
+
+        UploadHandlerRaw uploadHandlerRaw = new UploadHandlerRaw(jsonBinary);
+        uploadHandlerRaw.contentType = "application/json";
+
+
+        UnityWebRequest www =
+            new UnityWebRequest(url, "POST", downloadHandlerBuffer, uploadHandlerRaw);
+
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.downloadHandler.text.IndexOf("Success") == -1)
+        {
+            Log(string.Format("{0}: {1} json is: {2}", www.url, www.error, json));
+            #if UNITY_EDITOR
+            ;
+            #elif UNITY_ANDROID
+           
+            #endif
+        }
+        else
+        {
+            Log(string.Format("Response: {0}", www.downloadHandler.text));
+            if(afterCall!=null)
+                afterCall(json);
+
+        }
+    }
+
+    IEnumerator UploadFile(string apiUrl, byte[] data, string fileName, string location, string rawData,string contentType)
+    {
+        Log(data+" , "+fileName+", "+location+" , "+rawData);
+
+        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        formData.Add(new MultipartFormDataSection("rawdata",rawData));
+        formData.Add(new MultipartFormDataSection("location", location));
+        formData.Add(new MultipartFormFileSection("file", data, fileName, contentType));
+        UnityWebRequest www = UnityWebRequest.Post(apiUrl, formData);
+        
+        // Send the request
+        yield return www.SendWebRequest();
+            
+        // Check for errors
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Log(string.Format("{0}: {1} json is: {2}", www.url, www.error, www.uploadedBytes));
+            SaveData(fileName,data);
+        }
+        else
+        {
+            //Log(formData.ToString());
+            Log("Upload complete!");
+        }
+
+    }
+    /// <summary>
+    /// Save data in a temp file
+    /// </summary>
+    private void SaveData(string fileName, byte[] data)
+    {
+        string folderPath = Application.dataPath + "/";
+        File.WriteAllBytes(folderPath + fileName, data);
+    }
+
+    /// <summary>
+    /// Send saved files to server
+    /// </summary>
+    private void SendSavedFilesAndDelete()
+    {
+        try
+        {
+            foreach (string file in Directory.GetFiles(Application.dataPath + "/"))
+            {
+                String contents = File.ReadAllText(file);
+                SendJson(file.Split('-')[0],contents);
+                //File.Delete(file);
+            }
+        }
+        catch (Exception ex)
+        {
+            Log(ex.ToString());
+        }
+    }
+
+    private void Log(string message)
+    {
+        Debug.Log(message);
+    }
+
+
+}

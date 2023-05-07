@@ -24,7 +24,6 @@ public class VoiceEmotionManager : MonoBehaviour
     private string folderPath = "audios/voiceEmotion";
     [SerializeField]
     private int selectedEmotion;
-    [SerializeField] private Text DebugText;
 
     [SerializeField] private Toggle[] EmotionButtons;
 

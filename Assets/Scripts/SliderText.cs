@@ -13,7 +13,7 @@ public class SliderText : MonoBehaviour
         float sliderValue = mySlider.value;
 
         // Set the text of the Text UI element to the current value of the slider
-        valueText.text = sliderValue.ToString()+"%";
+        valueText.text = sliderValue.ToString()+"/"+mySlider.maxValue;;
         
     }
 }

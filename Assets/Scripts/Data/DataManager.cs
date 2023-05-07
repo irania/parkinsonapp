@@ -35,7 +35,7 @@ namespace DefaultNamespace
                 AppId = AppId,
                 UserName = name,
                 IsUploaded = false,
-                LevelsDone = new []{false,false,false,false,false,false,false}
+                LevelsDone = new []{false,false,false,false,false,false,false,false}
             };
             Users.Add(newUser);
             UploadUser(newUser);
@@ -99,6 +99,11 @@ namespace DefaultNamespace
             {
                 return new List<User>();
             }
+        }
+
+        public void ToggleLanguage()
+        {
+            isFarsi = !isFarsi;
         }
         private void SaveUsers(List<User> users)
         {
