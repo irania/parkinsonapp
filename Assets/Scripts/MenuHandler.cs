@@ -12,7 +12,9 @@ public class MenuHandler : MonoBehaviour
     private Text UserNameText;
     [SerializeField]
     private List<GameObject> ButtonsTick;
-
+    public float displayTime = 0.5f;
+    [SerializeField]
+    public GameObject orangePanel;
     private void Start()
     {
         SetTicks();
@@ -37,40 +39,51 @@ public class MenuHandler : MonoBehaviour
 
     public void LoadHandwritingScene()
     {
-        Application.LoadLevel ("DrawingScene");
+        StartCoroutine(ShowOrangeScreenAndLoadNextScene("DrawingScene"));
     }
     public void LoadSelfieScene()
     {
-        Application.LoadLevel ("TakingSelfieScene");
+        StartCoroutine(ShowOrangeScreenAndLoadNextScene("TakingSelfieScene"));
     }
     public void LoadVisualEmotionScene()
     {
-        Application.LoadLevel ("VisualEmotionScene");
+        StartCoroutine(ShowOrangeScreenAndLoadNextScene("VisualEmotionScene"));
     }
     public void LoadVoicsEmotionScene()
     {
-        Application.LoadLevel ("VoiceEmotionScene");
+        StartCoroutine(ShowOrangeScreenAndLoadNextScene("VoiceEmotionScene"));
     }
     
     public void LoadQuestionareScene()
     {
-        Application.LoadLevel ("QuestionareScene");
+        StartCoroutine(ShowOrangeScreenAndLoadNextScene("QuestionareScene"));
     }
     public void LoadProfile()
     {
-        Application.LoadLevel ("ProfileScene");
+        StartCoroutine(ShowOrangeScreenAndLoadNextScene("ProfileScene"));
     }
     public void LoadPhysical()
     {
-        Application.LoadLevel ("PhysicalScene");
+        StartCoroutine(ShowOrangeScreenAndLoadNextScene("PhysicalScene"));
     }
     
     public void LoadVoiceGame()
     {
-        Application.LoadLevel ("MainMenu");
+        StartCoroutine(ShowOrangeScreenAndLoadNextScene("MainMenu"));
     }
     public void OpenUserPanel()
     {
         
+    }
+    
+    IEnumerator ShowOrangeScreenAndLoadNextScene(string nextSceneName)
+    {
+        orangePanel.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(displayTime);
+
+        
+        Application.LoadLevel(nextSceneName);
+        //orangePanel.gameObject.SetActive(false);
     }
 }

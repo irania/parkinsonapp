@@ -38,6 +38,7 @@ namespace DefaultNamespace
                 LevelsDone = new []{false,false,false,false,false,false,false,false}
             };
             Users.Add(newUser);
+            SelectLastUser();
             UploadUser(newUser);
             SaveUsers(Users);
             return newUser;

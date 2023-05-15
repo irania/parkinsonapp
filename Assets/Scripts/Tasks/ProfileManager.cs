@@ -36,7 +36,11 @@ public class ProfileManager: MonoBehaviour
     [SerializeField]
     private Toggle RightHand;
     
-
+    [SerializeField]
+    private InputField Phone;
+    
+    [SerializeField]
+    private InputField OtherDisease;
     private void Update()
     {
         if (Keyboard.current.escapeKey.isPressed)
@@ -57,8 +61,12 @@ public class ProfileManager: MonoBehaviour
             LastMedicine = Int32.TryParse(LastDrug.text, out int resultDrug) ? resultDrug : 0,
             LungDisease = LungDisease.isOn,
             ParkFamily = ParkFamily.isOn,
-            YearDisease = Int32.TryParse(LastDrug.text, out int resultYear) ? resultYear : 0,
-            RightHand = RightHand.isOn
+            YearDisease = Int32.TryParse(YearDisease.text, out int resultYear) ? resultYear : 0,
+            RightHand = RightHand.isOn,
+            Phone = Phone.text,
+            OtherDisease = OtherDisease.text,
+            UserName = DataManager.Instance.GetCurrentUser().UserName
+            
         };
         GameData gd = new GameData()
         {

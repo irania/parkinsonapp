@@ -45,7 +45,7 @@ public class SendDataManager : Singleton<SendDataManager>
 
         //user name
         gameData.UserID = DataManager.Instance.GetCurrentUser().Id;
-        string fileName = gameData.DataName+"_"+Settings.Instance.level+"_"+DateTime.Now.Ticks+".txt";
+        string fileName = gameData.DataName+"_"+DateTime.Now.Ticks+".txt";
         Log(gameData.Data);    
         StartCoroutine(UploadFile(Url + "data/apps/" + AppId + "/users/" + gameData.UserID,
             Encoding.ASCII.GetBytes(gameData.Data),
@@ -142,7 +142,13 @@ public class SendDataManager : Singleton<SendDataManager>
     /// </summary>
     private void SaveData(string fileName, byte[] data)
     {
-        string folderPath = Application.dataPath + "/";
+        string folderPath = Application.persistentDataPath + "/"+DataManager.Instance.GetCurrentUser().Id+"/";
+        // Ensure the directory exists
+        string directoryPath = Path.GetDirectoryName(folderPath);
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
         File.WriteAllBytes(folderPath + fileName, data);
     }
 
@@ -153,7 +159,7 @@ public class SendDataManager : Singleton<SendDataManager>
     {
         try
         {
-            foreach (string file in Directory.GetFiles(Application.dataPath + "/"))
+            foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/"))
             {
                 String contents = File.ReadAllText(file);
                 SendJson(file.Split('-')[0],contents);

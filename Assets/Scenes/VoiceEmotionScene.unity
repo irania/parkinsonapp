@@ -2676,7 +2676,6 @@ MonoBehaviour:
   ConfidenceSlider: {fileID: 965307922}
   PleasentSlider: {fileID: 858612384}
   selectedEmotion: 0
-  DebugText: {fileID: 0}
   EmotionButtons:
   - {fileID: 185147693}
   - {fileID: 1789805960}
@@ -3088,7 +3087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7349455376472762539, guid: 15568a3690e0d9e4fb838b45286a0ac2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8010140879443843096, guid: 15568a3690e0d9e4fb838b45286a0ac2, type: 3}
       propertyPath: m_Pivot.x
@@ -3650,7 +3649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7349455376472762539, guid: 15568a3690e0d9e4fb838b45286a0ac2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8010140879443843096, guid: 15568a3690e0d9e4fb838b45286a0ac2, type: 3}
       propertyPath: m_Pivot.x
@@ -3751,7 +3750,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 386307890, guid: cdc77a6db4f46654b8a6331c37e67505, type: 3}
       propertyPath: StepsNumber
-      value: 21
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1021983400377466296, guid: cdc77a6db4f46654b8a6331c37e67505, type: 3}
       propertyPath: m_Pivot.x

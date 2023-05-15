@@ -3,6 +3,7 @@
 [Serializable]
 public class Profile
 {
+    public string UserName;
     public string Id;
     public bool IsMan;
     public int Age;
@@ -13,5 +14,7 @@ public class Profile
     public int LastMedicine;
     public string Name;
     public bool RightHand;
+    public string Phone;
+    public string OtherDisease;
 
 }
