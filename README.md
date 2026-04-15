@@ -15,13 +15,11 @@ This repository contains a Unity project with assets, scripts, scenes, and confi
 ## Getting Started
 
 1. Install Unity Hub and the Unity version used by this project.
-2. Open Unity Hub and add the project folder:
-   - `c:\Users\atefe\Documents\GitHub\parkinsonapp`
+2. Open Unity Hub and add the project folder.
 3. Open the project in the Unity Editor.
 
 ## Notes
 
-- The repository does not currently include a dedicated README or setup scripts beyond the Unity project files.
 - Use Unity Editor to manage scenes, builds, and assets.
 
 ## License
